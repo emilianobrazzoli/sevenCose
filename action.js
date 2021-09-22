@@ -136,7 +136,7 @@ module.exports = {
         // While there remain elements to shuffle...
         while (0 < totalDice) {
             // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * numberDice)+1;
+            randomIndex = Math.floor(Math.random() * 10)+1;
             //console.log('Ancora '+totalDice+ ' dadi da tirare');
 			diceRolled[currentIndex] = randomIndex; 
             currentIndex++;
