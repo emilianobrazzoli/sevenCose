@@ -76,7 +76,7 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguag
     if(consume.length===0){
         if(lenguage=='ita'){
             result.push("\n **Incrementi: "+total+"**");
-            result.push("\n Dadi scartati:"+diceTrash);
+            result.push("\n Dadi scartati: "+diceTrash);
         }
         else{
             result.push("\n **Raises: "+total+"**");
