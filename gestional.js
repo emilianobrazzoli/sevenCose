@@ -37,7 +37,11 @@ module.exports = {
                     }
                     break; 
                 case 'aiuto':
-                    respond.what = '';
+                    respond.what = 'Ciao marinaio! '
+                    +'Il comando base è /7s tira N dove N è il numero di dadi che tirerai!\n' 
+                    +'Aggiungendo esplodi ogni 10 verrà ritirato!\n' 
+                    +'Aggingendo bonus N sommerai una cifra ad ogni dado tirato\n' 
+                    +'Puoi modificare la soglia di incremento con soglia N dove N è la nuova soglia\n'  ;
                     break;
                 default:
                     respond.what = 'digita /7s aiuto';
