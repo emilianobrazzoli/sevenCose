@@ -108,11 +108,12 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus){
             } 
         }
         if(sum>=success ){
+            result.push("**["+stringResult+"]**"); 
             total=total+1;
         }else{
+            result.push("~~["+stringResult+"]~~"); 
             diceTrash=diceTrash+1;
         } 
-        result.push("["+stringResult+"]"); 
  
         return findCouple(consume, result, success, total, diceTrash, bonus);
     } 
