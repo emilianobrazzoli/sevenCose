@@ -49,8 +49,7 @@ app.get("/", (request, response) => {
 
 setInterval(() => {
     console.log( "Offer a coffee: coffeeeeeeeeeee");
-    http.get(`http://caffeinabot2.glitch.me/`);
-    http.get(`http://caffeinabot.glitch.me/`); 
+    http.get(`http://sleeppy.glitch.me/`); 
 }, 280000); 
 
 app.listen(port);
