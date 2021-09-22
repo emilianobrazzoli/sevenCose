@@ -1,0 +1,28 @@
+{
+    "name": "sevencose",
+    "version": "1.0.0",
+    "description": "My own Discord bot",
+    "main": "arcanacrown.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node sevenCose.js"
+    },
+    "engines": {
+        "node": "6.11.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/emilianobrazzoli/sevenCose.git"
+    },
+    "author": "EmilianoBrazzoli",
+    "license": "MIT",
+    "dependencies": {
+        "aws-sdk": "2.4.12",
+        "discord.io": "^2.5.3",
+        "winston": "^3.1.0",
+        "node-json-db": "",
+        "request": "^2.88.0",
+        "express": "^4.16.3",
+        "discord.js": "^11.4.2"
+    }
+}
