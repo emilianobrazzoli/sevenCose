@@ -3,9 +3,10 @@ var gestional = require('./gestional.js');
 //var delegate = require('./delegate.js');
 const express = require('express');
 const path = require('path');
-const app = express(); 
-require('dotenv').config();
-var port = process.env.PORT || 8080;
+const app = express();  
+    require('dotenv').config();
+
+var port = process.env.PORT || 80;
 var token = process.env.TOKEN || '';
 
 app.use(express.static(__dirname + '/dist/'));
@@ -13,7 +14,8 @@ app.use('/src/assets', express.static(__dirname + '/src/assets/'));
 
 
 //Initialize Discord Bot
-var bot = new Discord.Client();
+var bot =  new Discord.Client()
+
 
 var cmd = function(message) {
     if (message.content.substring(0, 2) == '/7s') {
@@ -44,10 +46,10 @@ bot.on('message', message => {
 bot.login(token);
 
 //coffeeeeee every 3 minuts
+
+
 /*
-
 console.log( "Can we meet at the a coffee machine?");
-
 const http = require('http');
 app.get("/", (request, response) => {
 console.log( "Received a coffee: coffeeeeeeeeeee");
