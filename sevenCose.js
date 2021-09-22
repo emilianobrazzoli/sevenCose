@@ -1,6 +1,5 @@
 var Discord = require("discord.js");
-var gestional = require('./gestional.js');
-//var delegate = require('./delegate.js');
+var gestional = require('./gestional.js'); 
 const express = require('express');
 const path = require('path');
 const app = express();  
@@ -47,8 +46,7 @@ bot.login(token);
 
 //coffeeeeee every 3 minuts
 
-
-/*
+ 
 console.log( "Can we meet at the a coffee machine?");
 const http = require('http');
 app.get("/", (request, response) => {
@@ -62,7 +60,6 @@ setInterval(() => {
     http.get(`http://caffeinabot2.glitch.me/`);
     http.get(`http://caffeinabot.glitch.me/`);
     delegate.clean();
-}, 280000);
-*/
+}, 280000); 
 
 app.listen(port);
