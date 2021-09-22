@@ -4,7 +4,7 @@ var gestional = require('./gestional.js');
 const express = require('express');
 const path = require('path');
 const app = express();
-
+//var process = {env: {TOKEN:'', PORT:''}};
 
 app.use(express.static(__dirname + '/dist/'));
 app.use('/src/assets', express.static(__dirname + '/src/assets/'));
@@ -39,7 +39,7 @@ bot.on("ready", () => {
 bot.on('message', message => {
     cmd(message);
 });
-bot.login(process.env.TOKEN);
+bot.login(process.env.TOKEN || '');
 
 //coffeeeeee every 3 minuts
 /*
@@ -52,7 +52,6 @@ console.log( "Received a coffee: coffeeeeeeeeeee");
 response.sendStatus(200);
 });
 
-app.listen(process.env.PORT || 8080);
 
 setInterval(() => {
     console.log( "Offer a coffee: coffeeeeeeeeeee");
@@ -61,3 +60,5 @@ setInterval(() => {
     delegate.clean();
 }, 280000);
 */
+
+app.listen(process.env.PORT || 8080);
