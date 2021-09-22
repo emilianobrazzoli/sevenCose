@@ -18,7 +18,20 @@ module.exports = {
             switch (cmd) {
                 case 'tira':
                     if (args.length >= 3) {
-                        respond.what =  action.roll( args[2]);
+                        var bonus =  0;
+                        var soglia= 10;
+                    
+                        if(args.includes('soglia')){
+                            var index= args.indexOf('soglia');
+                            soglia=args[index+1];
+                        }
+                        if(args.includes('bonus')){
+                            var index= args.indexOf('bonus');
+                            bonus=args[index+1];
+                        }
+                        var esplosioni=args.includes('esplodi');
+                        console.log(args[2]+" "+soglia+" "+bonus+" "+esplosioni);
+                        respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni);
                     } else {
                         respond.what = 'Command wrong: dichiara quanti dadi vuoi tirare es /7s tira 10';
                     }

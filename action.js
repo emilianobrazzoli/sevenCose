@@ -10,9 +10,9 @@ var result=[];
 console.log("originale:"+diceRolled+"\n");
 result=findCouple(consume,result,10,0,0);
 console.log(" risultato:"+result+"\n"); */
-var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual){
+var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus){
     if(finded.length===0){
-        if(diceRolled[firstIndex] >=success){ //il primo va bene
+        if(diceRolled[firstIndex] +bonus>=success){ //il primo va bene
             finded = [firstIndex];
             //console.log("first find ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
             return finded; 
@@ -23,7 +23,7 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
             finded = [firstIndex];
             finded.push(0);
             //console.log("first ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
-            return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual) ;
+            return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
         }
     }
     if(thisIndex<=firstIndex){ 
@@ -35,7 +35,7 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
                 finded = [firstIndex];
                 finded.push(0);
                 //console.log("first ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
-                return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, !onlyEqual) ;
+                return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, !onlyEqual,bonus) ;
             }
             finded = [firstIndex];
             //console.log("last ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
@@ -48,7 +48,7 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
                 finded.push(diceRolled.length-index);
             }
             //console.log("add grade ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
-            return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual) ;
+            return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
         }
     }
     index=(grado-1);
@@ -56,7 +56,7 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
     total=0;
     for (let index = 0; index < finded.length; index++) {
         const element = finded[index]; 
-        total=total+diceRolled[element]; 
+        total=total+diceRolled[element] +bonus; 
     }   
     if(onlyEqual && total ==success){ 
         //console.log("find ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
@@ -69,29 +69,37 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
 
     thisIndex--;
     //console.log("next ["+diceRolled+"]   "+ firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
-    return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual) ;
+    return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
 };
-var findCouple= function(consume, result, success, total,diceTrash){ 
+var findCouple= function(consume, result, success, total,diceTrash,bonus){ 
     //console.log("findCouple: "+consume+"; "+ result+"\n"); 
     if(consume.length===0){
-        result.push("\n incrementi:"+total);
-        result.push("\n dadi scartati:"+diceTrash);
+        result.push("\n Incrementi:"+total);
+        result.push("\n Dadi scartati:"+diceTrash);
         return result;
     }else{
  
         var sum= 0;
         var stringResult ='';
-        var pack =ricursiveFindSuccess(consume, 0, (consume.length-1),  [], success,1,true); 
-        if(!pack && consume){   
-            stringResult=consume[0];
+        var pack =ricursiveFindSuccess(consume, 0, (consume.length-1),  [], success,1,true,bonus); 
+        if(!pack && consume){    
+            if(bonus!==0){
+                stringResult=consume[0]+"+"+bonus;
+            }else{
+                stringResult=consume[0]; 
+            }
             consume.splice(0, 1);
-            sum=stringResult;
+            sum=stringResult+bonus;
         }else{   
             pack.sort(function(a, b){return a-b});
             //console.log("xxxxx: "+consume+"; "+ pack+"\n"); 
             pack.forEach(toremove => {
-                stringResult=stringResult+" "+consume[toremove]+" ";  
-                sum=sum+consume[toremove];
+                if(bonus!==0){
+                    stringResult=stringResult+" "+consume[toremove]+"+"+bonus+" ";
+                }else{
+                    stringResult=stringResult+" "+consume[toremove]+" "; 
+                };  
+                sum=sum+consume[toremove]+bonus;
             });
             for (let index = (pack.length-1); index>=0 ; index--) {
                 const element = pack[index];
@@ -103,13 +111,14 @@ var findCouple= function(consume, result, success, total,diceTrash){
             total=total+1;
         }else{
             diceTrash=diceTrash+1;
-        }
+        } 
         result.push("["+stringResult+"]"); 
-        return findCouple(consume, result, success, total, diceTrash);
+ 
+        return findCouple(consume, result, success, total, diceTrash, bonus);
     } 
 } 
-module.exports = {
-    roll: function(numberDice) { 
+module.exports = { 
+    roll: function(numberDice, soglia, bonus,esplosioni) { 
         
 		if(numberDice<='0' || isNaN(numberDice)){
 			message =  'Molto spiritoso';
@@ -127,15 +136,17 @@ module.exports = {
         while (0 < totalDice) {
             // Pick a remaining element...
             randomIndex = Math.floor(Math.random() * numberDice)+1;
-            totalDice --;
             //console.log('Ancora '+totalDice+ ' dadi da tirare');
-			diceRolled[currentIndex] = randomIndex;
-			currentIndex++;
+			diceRolled[currentIndex] = randomIndex; 
+            currentIndex++;
+            if(!esplosioni || randomIndex!==10){
+                totalDice --;
+            }
         } 
         diceRolled.sort(function(a, b){return b-a});
  
-        result=findCouple(diceRolled,result,10,0,0);  
+        result=findCouple(diceRolled,result,soglia,0,0,bonus);  
 
-        return "Risultati: "+result; 
+        return " Risultati: "+result; 
     }
 };
