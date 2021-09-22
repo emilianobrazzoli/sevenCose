@@ -19,7 +19,7 @@ app.use('/src/assets', express.static(__dirname + '/src/assets/'));
 var bot =  new Discord.Client()
 
 var cmd = function(message) {
-    console.log('Comando arrivato');
+    //console.log('Comando arrivato');
     if (message.content.substring(0, 3) == '/7s') {
         console.log(message.author.id+' in '+ message.channel.id+' do '+ message.content.toString());
         var respond = gestional.commandDice(message.author.id, message.channel.id, message.content.toString().toLowerCase(), message);

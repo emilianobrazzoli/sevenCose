@@ -9,12 +9,12 @@ module.exports = {
             where: channelID
         }
  
-        var args = message.substring(1).split(' ');
+        var args = message.toLowerCase().substring(1).split(' ');
         console.log('argomienti: '+args);
         if (args.length >= 2) {
             var cmd = args[1];
 
-            console.log('Comando: '+cmd);
+            //console.log('Comando: '+cmd);
             switch (cmd) {
                 case 'tira':
                     if (args.length >= 3) {
@@ -30,7 +30,7 @@ module.exports = {
                             bonus=args[index+1];
                         }
                         var esplosioni=args.includes('esplodi');
-                        console.log(args[2]+" "+soglia+" "+bonus+" "+esplosioni);
+                       // console.log(args[2]+" "+soglia+" "+bonus+" "+esplosioni)//
                         respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni);
                     } else {
                         respond.what = 'Command wrong: dichiara quanti dadi vuoi tirare es /7s tira 10';
@@ -38,10 +38,10 @@ module.exports = {
                     break; 
                 case 'aiuto':
                     respond.what = 'Ciao marinaio! '
-                    +'Il comando base è /7s tira N dove N è il numero di dadi che tirerai!\n' 
-                    +'Aggiungendo esplodi ogni 10 verrà ritirato!\n' 
-                    +'Aggingendo bonus N sommerai una cifra ad ogni dado tirato\n' 
-                    +'Puoi modificare la soglia di incremento con soglia N dove N è la nuova soglia\n'  ;
+                    +'Il comando base è "/7s tira N" dove N è il numero di dadi che tirerai!\n' 
+                    +'Aggiungendo "esplodi" ogni 10 verrà ritirato!\n' 
+                    +'Aggiungendo "bonus N" sommerai una cifra ad ogni dado tirato\n' 
+                    +'Aggiungendo "soglia N" modificherai la soglia in N (di default è a 10)\n'  ;
                     break;
                 default:
                     respond.what = 'digita /7s aiuto';
