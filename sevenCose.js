@@ -3,8 +3,10 @@ var gestional = require('./gestional.js');
 //var delegate = require('./delegate.js');
 const express = require('express');
 const path = require('path');
-const app = express();
-//var process = {env: {TOKEN:'', PORT:''}};
+const app = express(); 
+require('dotenv').config();
+var port = process.env.PORT || 8080;
+var token = process.env.TOKEN || '';
 
 app.use(express.static(__dirname + '/dist/'));
 app.use('/src/assets', express.static(__dirname + '/src/assets/'));
@@ -39,7 +41,7 @@ bot.on("ready", () => {
 bot.on('message', message => {
     cmd(message);
 });
-bot.login(process.env.TOKEN || '');
+bot.login(token);
 
 //coffeeeeee every 3 minuts
 /*
@@ -61,4 +63,4 @@ setInterval(() => {
 }, 280000);
 */
 
-app.listen(process.env.PORT || 8080);
+app.listen(port);
