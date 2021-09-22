@@ -71,11 +71,17 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
     //console.log("next ["+diceRolled+"]   "+ firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
     return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
 };
-var findCouple= function(consume, result, success, total,diceTrash,bonus){ 
+var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguage){ 
     //console.log("findCouple: "+consume+"; "+ result+"\n"); 
     if(consume.length===0){
-        result.push("\n Incrementi:"+total);
-        result.push("\n Dadi scartati:"+diceTrash);
+        if(lenguage=='ita'){
+            result.push("\n **Incrementi: "+total+"**");
+            result.push("\n Dadi scartati:"+diceTrash);
+        }
+        else{
+            result.push("\n **Raises: "+total+"**");
+            result.push("\n Discarded dice: "+diceTrash);
+        }
         return result;
     }else{
  
@@ -119,10 +125,15 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus){
     } 
 } 
 module.exports = { 
-    roll: function(numberDice, soglia, bonus,esplosioni) { 
+    roll: function(numberDice, soglia, bonus,esplosioni, lenguage) { 
         
 		if(numberDice<='0' || isNaN(numberDice)){
-			message =  'Molto spiritoso';
+            if(lenguage=='ita'){
+			    message =  'Molto spiritoso';
+            }
+            else{
+			    message =  'Very funny';
+            }
             return message;
 		}
         //console.log('Tirando '+numberDice+ ' dadi');
@@ -146,8 +157,13 @@ module.exports = {
         } 
         diceRolled.sort(function(a, b){return b-a});
  
-        result=findCouple(diceRolled,result,soglia,0,0,bonus);  
+        result=findCouple(diceRolled,result,soglia,0,0,bonus, lenguage);  
 
-        return " Risultati: "+result; 
+        if(lenguage=='ita'){
+            return " Risultati: "+result; 
+        }
+        else{
+            return " Result: "+result; 
+        }
     }
 };
