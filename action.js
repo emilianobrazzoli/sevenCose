@@ -141,9 +141,7 @@ module.exports = {
         var message = '';
 		var diceRolled = [];
 		var result = [];
-		var currentIndex = 0;
-        var success = 10;
-        var finded
+		var currentIndex = 0; 
         // While there remain elements to shuffle...
         while (0 < totalDice) {
             // Pick a remaining element...

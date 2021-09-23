@@ -20,7 +20,8 @@ var bot =  new Discord.Client()
 
 var cmd = function(message) {
     //console.log('Comando arrivato');
-    if (message.content.substring(0, 3) == '/7s' || message.content.substring(0, 3) == '/7S') {
+    if (message.content.substring(0, 3) == '/7s' || message.content.substring(0, 3) == '/7S' ||
+        message.content.substring(0, 3) == '7s' || message.content.substring(0, 3) == '7S') {
         console.log(message.author.id+' in '+ message.channel.id+' do '+ message.content.toString());
         var respond = gestional.commandDice(message.author.id, message.channel.id, message.content.toString().toLowerCase(), message);
     }  

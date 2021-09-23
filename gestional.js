@@ -70,7 +70,10 @@ module.exports = {
                     + 'By adding "threshold N" will change the threshold to N (default is 10) \n';
                     break;
                 default:
-                    respond.what = 'digita /7s aiuto | type /7s help';
+                    if(isNaN(cmd)){
+                        respond.what = 'digita /7s aiuto | type /7s help';
+                    }else{
+                    }
                     break;
             }
         } else {
