@@ -35,22 +35,18 @@ bot.on('message', message => {
     cmd(message);
 });
 
-bot.login(token);
+bot.login(token); 
 
-//coffeeeeee every 3 minuts
-/*
-console.log( "Can we meet at the a coffee machine?");
-
-const http = require('http');
-
-
-setInterval(() => {
-    console.log( "Offer a coffee: coffeeeeeeeeeee");
-    http.get('http://sleepp.glitch.me/'); 
-}, 280000); 
-*/
 app.get("/", (request, response) => {
     console.log( "Received a coffee: coffeeeeeeeeeee");
     response.sendStatus(200);
 });
+
 app.listen(port);
+
+/*
+
+Ciao sono Emiliano di carbonara Roleplay
+seguiteci sui social!
+
+*/
