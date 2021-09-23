@@ -59,14 +59,14 @@ module.exports = {
                     respond.what = 'Ciao marinaio!\n '
                     +'Il comando base è "/7s tira N" o "7s N" dove N è il numero di dadi che tirerai!\n' 
                     +'Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!\n' 
-                    +'Aggiungendo "bonus N" o "b" sommerai una cifra ad ogni dado tirato\n' 
+                    +'Aggiungendo "bonus N" o "b" sommerai una cifra N ad ogni dado tirato\n' 
                     +'Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)\n'  ;
                     break; 
                 case 'help':
                     respond.what = 'Hello sailor!\n '
                     + 'The basic command is "/ 7s roll N" where N is the number of dice you will roll! \n'
                     + 'By adding "explode" every 10 will retire another dice! \n'
-                    + 'By adding "bonus N" you will add a bonus to each die rolled \n'
+                    + 'By adding "bonus N" you will add the bonus N to each die rolled \n'
                     + 'By adding "threshold N" will change the threshold to N (default is 10) \n';
                     break;
                 default:
