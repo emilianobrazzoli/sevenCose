@@ -85,7 +85,7 @@ module.exports = {
                             bonus=args[index+1];
                         }
                         var esplosioni=args.includes('e'); 
-                        respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni,'ita');
+                        respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),esplosioni,'ita');
                     }
                     break;
             }
