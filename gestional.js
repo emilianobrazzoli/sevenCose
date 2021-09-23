@@ -5,7 +5,7 @@ module.exports = {
     commandDice: function(userID, channelID, message, transport) {
         var respond = {
             who: userID,
-            what: 'Non c\'è vento',
+            what: 'ERROR: no input recorded',
             where: channelID
         }
  
@@ -57,10 +57,10 @@ module.exports = {
                     break; 
                 case 'aiuto':
                     respond.what = 'Ciao marinaio!\n '
-                    +'Il comando base è "/7s tira N" dove N è il numero di dadi che tirerai!\n' 
-                    +'Aggiungendo "esplodi" ogni 10 verrà ritirato!\n' 
-                    +'Aggiungendo "bonus N" sommerai una cifra ad ogni dado tirato\n' 
-                    +'Aggiungendo "soglia N" modificherai la soglia in N (di default è a 10)\n'  ;
+                    +'Il comando base è "/7s tira N" o "7s N" dove N è il numero di dadi che tirerai!\n' 
+                    +'Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!\n' 
+                    +'Aggiungendo "bonus N" o "b" sommerai una cifra ad ogni dado tirato\n' 
+                    +'Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)\n'  ;
                     break; 
                 case 'help':
                     respond.what = 'Hello sailor!\n '
@@ -73,6 +73,19 @@ module.exports = {
                     if(isNaN(cmd)){
                         respond.what = 'digita /7s aiuto | type /7s help';
                     }else{
+                        var bonus =  0;
+                        var soglia= 10;
+                    
+                        if(args.includes('s')){
+                            var index= args.indexOf('s');
+                            soglia=args[index+1];
+                        }
+                        if(args.includes('b')){
+                            var index= args.indexOf('b');
+                            bonus=args[index+1];
+                        }
+                        var esplosioni=args.includes('e'); 
+                        respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni,'ita');
                     }
                     break;
             }
