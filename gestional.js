@@ -1,4 +1,29 @@
- 
+var commands = ['7s','roll','tira','/7s','s','b','e','threshold','explode'];
+
+var splitArgument = function(args){
+    var argsSplitted = [];
+    for (let index = 0; index < args.length; index++) {
+        const element = args[index];
+        for (let index = 0; index < commands.length; index++) {
+            const command = commands[index];
+            
+            if(element.startsWith(command)){// //endsWith 
+                matches = element.match(/\d+/g);
+                argsSplitted.push(command);
+                if(command!='7s' && command!='/7s' && matches && matches[0] && !isNaN(matches[0])){
+                    argsSplitted.push(matches[0]); 
+                } 
+                break;
+            }else if(!isNaN(element)){
+                argsSplitted.push(element); 
+                break;
+            }
+            
+        }
+    } 
+         
+    return argsSplitted;
+}
 
 var action = require('./action.js');
 module.exports = {
@@ -10,6 +35,7 @@ module.exports = {
         }
  
         var args = message.toLowerCase().split(' ');
+        args =splitArgument(args);
         console.log('argomienti: '+args);
         if (args.length >= 2) {
             var cmd = args[1];
@@ -21,15 +47,15 @@ module.exports = {
                         var bonus =  0;
                         var soglia= 10;
                     
-                        if(args.includes('soglia')){
-                            var index= args.indexOf('soglia');
+                        if(args.includes('s')){
+                            var index= args.indexOf('s');
                             soglia=args[index+1];
                         }
-                        if(args.includes('bonus')){
-                            var index= args.indexOf('bonus');
+                        if(args.includes('b')){
+                            var index= args.indexOf('b');
                             bonus=args[index+1];
                         }
-                        var esplosioni=args.includes('esplodi');
+                        var esplosioni=args.includes('e'); 
                        // console.log(args[2]+" "+soglia+" "+bonus+" "+esplosioni)//
                         respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni,'ita');
                     } else {
@@ -60,7 +86,8 @@ module.exports = {
                     +'Il comando base è "/7s tira N" o "7s N" dove N è il numero di dadi che tirerai!\n' 
                     +'Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!\n' 
                     +'Aggiungendo "bonus N" o "b" sommerai una cifra N ad ogni dado tirato\n' 
-                    +'Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)\n' 
+                    +'Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)\n'
+                    +'Se non sbagli troppo i comandi cercherò comunque di capirti!' 
                     +'(Viva la carbonara)\n'  ;
                     break; 
                 case 'help':
