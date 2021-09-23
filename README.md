@@ -4,7 +4,7 @@ Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!
 Aggiungendo "bonus N" o "b" sommerai una cifra N ad ogni dado tirato
 Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)
 Se non sbagli troppo i comandi cercherò comunque di capirti!
-(Viva la carbonara)
+(Viva la carbonara: https://linktr.ee/CarbonaraRoleplay)
 
 Codice: https://github.com/emilianobrazzoli/sevenCose.git
 

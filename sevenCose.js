@@ -45,8 +45,9 @@ app.get("/", (request, response) => {
 app.listen(port);
 
 /*
-
 Ciao sono Emiliano di carbonara Roleplay
 seguiteci sui social!
-
+https://linktr.ee/CarbonaraRoleplay
+Se rubi questo codice miglioralo e magari contattami per dirmi
+"Grazie bello!"
 */
