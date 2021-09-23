@@ -1,4 +1,4 @@
-var commands = ['7s','roll','tira','/7s','s','b','e','threshold','explode'];
+var commands = ['7s','roll','tira','/7s','s','aiuto','help','b','e','threshold','explode'];
 
 var splitArgument = function(args){
     var argsSplitted = [];
@@ -99,7 +99,7 @@ module.exports = {
                     break;
                 default:
                     if(isNaN(cmd)){
-                        respond.what = 'digita /7s aiuto | type /7s help';
+                        respond.what = 'digita /7s aiuto \ntype /7s help';
                     }else{
                         var bonus =  0;
                         var soglia= 10;
