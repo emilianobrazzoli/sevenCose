@@ -82,12 +82,12 @@ module.exports = {
                     }
                     break; 
                 case 'carbonararoleplay':
-                    respond.what = 'Un intenditore!\n '
+                    respond.what = 'Un intenditore!\n'
                     +'Segui il mio creatore sui suoi social assieme ad una manica di pazzi:\n'+
-                    +'https://linktr.ee/CarbonaraRoleplay \n'  ;
+                    'https://linktr.ee/CarbonaraRoleplay \n'  ;
                     break;  
                 case 'aiuto':
-                    respond.what = 'Ciao marinaio!\n '
+                    respond.what = 'Ciao marinaio!\n'
                     +'Il comando base è "/7s tira N" o "7s N" dove N è il numero di dadi che tirerai!\n' 
                     +'Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!\n' 
                     +'Aggiungendo "bonus N" o "b" sommerai una cifra N ad ogni dado tirato\n' 
@@ -96,7 +96,7 @@ module.exports = {
                     +'(Viva la CarbonaraRoleplay)\n'  ;
                     break; 
                 case 'help':
-                    respond.what = 'Hello sailor!\n '
+                    respond.what = 'Hello sailor!\n'
                     + 'The basic command is "/ 7s roll N" where N is the number of dice you will roll! \n'
                     + 'By adding "explode" every 10 will retire another dice! \n'
                     + 'By adding "bonus N" you will add the bonus N to each die rolled \n'
@@ -104,7 +104,7 @@ module.exports = {
                     break;
                 default:
                     if(isNaN(cmd)){
-                        respond.what = 'digita /7s aiuto \ntype /7s help';
+                        respond.what = 'digita /7s aiuto\ntype /7s help';
                     }else{
                         var bonus =  0;
                         var soglia= 10;
@@ -123,7 +123,7 @@ module.exports = {
                     break;
             }
         } else {
-            respond.what = 'digita /7s aiuto \ntype /7s help';
+            respond.what = 'digita /7s aiuto\ntype /7s help';
         }  
         transport.reply('\n' + respond.what);
     }
