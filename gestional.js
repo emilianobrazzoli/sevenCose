@@ -9,7 +9,7 @@ module.exports = {
             where: channelID
         }
  
-        var args = message.toLowerCase().substring(1).split(' ');
+        var args = message.toLowerCase().split(' ');
         console.log('argomienti: '+args);
         if (args.length >= 2) {
             var cmd = args[1];
