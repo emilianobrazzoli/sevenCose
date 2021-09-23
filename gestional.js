@@ -1,4 +1,4 @@
-var commands = ['7s','roll','tira','/7s','s','aiuto','help','b','e','threshold','explode','CarbonaraRoleplay'];
+var commands = ['7s','roll','tira','/7s','s','aiuto','help','b','e','threshold','explode','carbonararoleplay'];
 
 var splitArgument = function(args){
     var argsSplitted = [];
@@ -81,7 +81,7 @@ module.exports = {
                         respond.what = 'Command wrong: state how many dice you want to roll and 7s roll 10';
                     }
                     break; 
-                case 'CarbonaraRoleplay':
+                case 'carbonararoleplay':
                     respond.what = 'Un intenditore!\n '
                     +'Segui il mio creatore sui suoi social assieme ad una manica di pazzi:\n'+
                     +'https://linktr.ee/CarbonaraRoleplay \n'  ;
@@ -123,7 +123,7 @@ module.exports = {
                     break;
             }
         } else {
-            respond.what = 'digita /7s aiuto | type /7s help';
+            respond.what = 'digita /7s aiuto \ntype /7s help';
         }  
         transport.reply('\n' + respond.what);
     }
