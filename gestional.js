@@ -1,4 +1,4 @@
-var commands = ['7s','roll','tira','/7s','s','aiuto','help','b','e','threshold','explode'];
+var commands = ['7s','roll','tira','/7s','s','aiuto','help','b','e','threshold','explode','CarbonaraRoleplay'];
 
 var splitArgument = function(args){
     var argsSplitted = [];
@@ -81,14 +81,19 @@ module.exports = {
                         respond.what = 'Command wrong: state how many dice you want to roll and 7s roll 10';
                     }
                     break; 
+                case 'CarbonaraRoleplay':
+                    respond.what = 'Un intenditore!\n '
+                    +'Segui il mio creatore sui suoi social assieme ad una manica di pazzi:\n'+
+                    +'https://linktr.ee/CarbonaraRoleplay \n'  ;
+                    break;  
                 case 'aiuto':
                     respond.what = 'Ciao marinaio!\n '
                     +'Il comando base è "/7s tira N" o "7s N" dove N è il numero di dadi che tirerai!\n' 
                     +'Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!\n' 
                     +'Aggiungendo "bonus N" o "b" sommerai una cifra N ad ogni dado tirato\n' 
                     +'Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)\n'
-                    +'Se non sbagli troppo i comandi cercherò comunque di capirti!' 
-                    +'(Viva la carbonara)\n'  ;
+                    +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
+                    +'(Viva la CarbonaraRoleplay)\n'  ;
                     break; 
                 case 'help':
                     respond.what = 'Hello sailor!\n '
