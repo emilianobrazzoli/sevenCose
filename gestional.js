@@ -56,18 +56,18 @@ module.exports = {
                     }
                     break; 
                 case 'aiuto':
-                    respond.what = 'Ciao marinaio! '
+                    respond.what = 'Ciao marinaio!\n '
                     +'Il comando base è "/7s tira N" dove N è il numero di dadi che tirerai!\n' 
                     +'Aggiungendo "esplodi" ogni 10 verrà ritirato!\n' 
                     +'Aggiungendo "bonus N" sommerai una cifra ad ogni dado tirato\n' 
                     +'Aggiungendo "soglia N" modificherai la soglia in N (di default è a 10)\n'  ;
                     break; 
                 case 'help':
-                    respond.what = 'Hello sailor! '
-                    + 'The basic command is "/ 7s roll N" where N is the number of dice you will roll! \ N'
-                    + 'By adding "explode" every 10 will retire another dice! \ N'
-                    + 'By adding "bonus N" you will add a bonus to each die rolled \ n'
-                    + 'By adding "threshold N" will change the threshold to N (default is 10) \ n';
+                    respond.what = 'Hello sailor!\n '
+                    + 'The basic command is "/ 7s roll N" where N is the number of dice you will roll! \n'
+                    + 'By adding "explode" every 10 will retire another dice! \n'
+                    + 'By adding "bonus N" you will add a bonus to each die rolled \n'
+                    + 'By adding "threshold N" will change the threshold to N (default is 10) \n';
                     break;
                 default:
                     respond.what = 'digita /7s aiuto | type /7s help';

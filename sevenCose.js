@@ -37,7 +37,7 @@ bot.on('message', message => {
 bot.login(token);
 
 //coffeeeeee every 3 minuts
-
+/*
 console.log( "Can we meet at the a coffee machine?");
 
 const http = require('http');
@@ -51,5 +51,5 @@ setInterval(() => {
     console.log( "Offer a coffee: coffeeeeeeeeeee");
     http.get('http://sleepp.glitch.me/'); 
 }, 280000); 
-
+*/
 app.listen(port);
