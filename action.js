@@ -108,7 +108,7 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguag
             } 
         }
         if(sum>=success ){
-            result.push(""+boldTAG+"["+stringResult+"]"+boldTAG+""); 
+            result.push(""+"["+stringResult+"]"+""); 
             total=total+1;
         }else{
             result.push(""+barratoTAG+"["+stringResult+"]"+barratoTAG+""); 
@@ -188,8 +188,8 @@ module.exports = {
                     if(element.includes(compare) ){
                         var firstindex = element.indexOf(compare);
                         var lastindex =  firstindex+compare.length; 
-                        var result2 = element.slice(0, firstindex) + underlineTAG +compare;
-                        result2 = result2 + underlineTAG + element.slice(lastindex);
+                        var result2 = element.slice(0, firstindex) + italicTAG+ underlineTAG +boldTAG+compare;
+                        result2 = result2 +boldTAG+ underlineTAG+italicTAG + element.slice(lastindex);
                         result[index]= result2;  
                         villanRolled.splice(index2, 1); 
                         break;
@@ -203,13 +203,13 @@ module.exports = {
                 var result3 =[];
                 for (let index = 0; index < result2.length-2; index++) {
                     var element=result2[index]; 
-                    result3.push(underlineTAG+element+underlineTAG)
+                    result3.push( italicTAG+ underlineTAG +boldTAG+element+boldTAG+ underlineTAG+italicTAG)
                 } 
                 if(lenguage=='ita'){
-                    return " Risultati: "+result+"\n "+underlineTAG+"Risultati villani:"+underlineTAG+" "+result3;
+                    return " Risultati: "+result+"\n "+italicTAG+ underlineTAG +"Risultati villani:"+ underlineTAG+italicTAG+" "+result3;
                 }
                 else{
-                    return " Result: "+result+"\n "+underlineTAG+"Villain result:"+underlineTAG+" "+result3; 
+                    return " Result: "+result+"\n "+italicTAG+ underlineTAG +"Villain result:"+ underlineTAG+italicTAG+" "+result3; 
                 }
             }
         }
