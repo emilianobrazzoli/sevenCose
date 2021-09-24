@@ -206,7 +206,7 @@ module.exports = {
                     result3.push( italicTAG+ underlineTAG +boldTAG+element+boldTAG+ underlineTAG+italicTAG)
                 } 
                 if(lenguage=='ita'){
-                    return " Risultati: "+result+",\n "+italicTAG+ underlineTAG +"Risultati villani:"+ underlineTAG+italicTAG+" "+result3;
+                    return " Risultati: "+result+",\n "+italicTAG+ underlineTAG +"Dadi Spregevoli:"+ underlineTAG+italicTAG+" "+result3;
                 }
                 else{
                     return " Result: "+result+",\n "+italicTAG+ underlineTAG +"Villain result:"+ underlineTAG+italicTAG+" "+result3; 

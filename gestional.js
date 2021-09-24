@@ -107,6 +107,7 @@ module.exports = {
                     +'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
                     +'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
                     +'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
+                    +'Aggiungendo "v N"aggiungerai N dadi spregevoli al tiro\n'
                     +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
                     +'(Viva la CarbonaraRoleplay)\n'
                     +'-----------\n'
@@ -115,6 +116,7 @@ module.exports = {
                     + 'By adding "e" every 10 will retire another dice! \n'
                     + 'By adding "b N" you will add the bonus N to each die rolled \n'
                     + 'By adding "t  N" will change the threshold to N (default is 10) \n'
+                    + 'By adding "v  N" you will add the N villain dice to the pool \n'
                     + 'For eng result add uk to the command \n';
                     break;
                 default:
