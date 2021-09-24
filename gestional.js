@@ -109,7 +109,7 @@ module.exports = {
                     +'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
                     +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
                     +'(Viva la CarbonaraRoleplay)\n'
-                    +'-----------'
+                    +'-----------\n'
                     +'Hello sailor!\n'
                     + 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
                     + 'By adding "e" every 10 will retire another dice! \n'
