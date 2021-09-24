@@ -1,30 +1,68 @@
-var commands = ['7s','roll','tira','/7s','s','aiuto','help','b','e','threshold','explode','carbonararoleplay'];
+var commands = ['aiuto','help','t','c','7s','/7s','s','b','e','u','v'];
+
+var split = function( element, argsSplitted){
+    for (let index = 0; index < commands.length; index++) {
+        const command = commands[index]; 
+        //console.log(command+"   "+ element+"   "+ argsSplitted);
+        if(element){
+            matches = element.match(/\d+/g);
+            if(element.startsWith(command)){// //endsWith 
+                argsSplitted.push(command);
+                if(element!='7s' && element!='/7s' &&  matches && matches[0] && !isNaN(matches[0])){ 
+                    var elements= element.split(command); 
+                    if(elements){
+                        elements.forEach(e => {
+                            if(e){ 
+                                argsSplitted = split( e, argsSplitted);
+                            }  
+                        });
+                        return argsSplitted;
+                    }
+                    argsSplitted = split( e, argsSplitted);
+                } 
+                return argsSplitted;
+            }else if(!isNaN(element)){
+                argsSplitted.push(element); 
+                return argsSplitted;
+            }else if(!element.startsWith('7s') && !element.startsWith('/7s') &&  matches && matches[0] && !isNaN(matches[0])){
+                matches.forEach(matche => { 
+                    var elements=element.split(matche); 
+                    if(elements){
+                        elements.forEach(e => {  
+                            if(e){ 
+                                argsSplitted = split( e, argsSplitted);
+                            }else{
+                                argsSplitted.push(matche);  
+                            }
+                        });
+                    }
+                });
+                return argsSplitted; 
+            } 
+        }else{
+            return;
+        }
+    }
+    return argsSplitted;
+}
 
 var splitArgument = function(args){
     var argsSplitted = [];
     for (let index = 0; index < args.length; index++) {
         const element = args[index];
-        for (let index = 0; index < commands.length; index++) {
-            const command = commands[index];
-            
-            if(element.startsWith(command)){// //endsWith 
-                matches = element.match(/\d+/g);
-                argsSplitted.push(command);
-                if(command!='7s' && command!='/7s' && matches && matches[0] && !isNaN(matches[0])){
-                    argsSplitted.push(matches[0]); 
-                } 
-                break;
-            }else if(!isNaN(element)){
-                argsSplitted.push(element); 
-                break;
-            }
-            
-        }
+        argsSplitted= split(  element, argsSplitted);
     } 
          
     return argsSplitted;
 }
+/** 
 
+var message = '/7s 7e v2';
+var args = message.toLowerCase().split(' ');
+args =splitArgument(args);
+console.log('argomienti: '+args);
+ 
+*/
 var action = require('./action.js');
 module.exports = {
     commandDice: function(userID, channelID, message, transport) {
@@ -41,46 +79,7 @@ module.exports = {
             var cmd = args[1];
 
             //console.log('Comando: '+cmd);
-            switch (cmd) {
-                case 'tira':
-                    if (args.length >= 3) {
-                        var bonus =  0;
-                        var soglia= 10;
-                    
-                        if(args.includes('s')){
-                            var index= args.indexOf('s');
-                            soglia=args[index+1];
-                        }
-                        if(args.includes('b')){
-                            var index= args.indexOf('b');
-                            bonus=args[index+1];
-                        }
-                        var esplosioni=args.includes('e'); 
-                       // console.log(args[2]+" "+soglia+" "+bonus+" "+esplosioni)//
-                        respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni,'ita');
-                    } else {
-                        respond.what = 'Command wrong: dichiara quanti dadi vuoi tirare es /7s tira 10';
-                    }
-                    break; 
-                case 'roll':
-                    if (args.length >= 3) {
-                        var bonus =  0;
-                        var soglia= 10;
-                    
-                        if(args.includes('threshold')){
-                            var index= args.indexOf('threshold');
-                            soglia=args[index+1];
-                        }
-                        if(args.includes('bonus')){
-                            var index= args.indexOf('bonus');
-                            bonus=args[index+1];
-                        }
-                        var esplosioni=args.includes('explode'); 
-                        respond.what =  action.roll( args[2], parseInt(soglia),parseInt(bonus),esplosioni,'eng');
-                    } else {
-                        respond.what = 'Command wrong: state how many dice you want to roll and 7s roll 10';
-                    }
-                    break; 
+            switch (cmd) { 
                 case 'carbonararoleplay':
                     respond.what = 'Un intenditore!\n'
                     +'Segui il mio creatore sui suoi social assieme ad una manica di pazzi:\n'+
@@ -88,27 +87,44 @@ module.exports = {
                     break;  
                 case 'aiuto':
                     respond.what = 'Ciao marinaio!\n'
-                    +'Il comando base è "/7s tira N" o "7s N" dove N è il numero di dadi che tirerai!\n' 
-                    +'Aggiungendo "esplodi" o "e" ogni 10 verrà ritirato!\n' 
-                    +'Aggiungendo "bonus N" o "b" sommerai una cifra N ad ogni dado tirato\n' 
-                    +'Aggiungendo "soglia N" o "s" modificherai la soglia in N (di default è a 10)\n'
+                    +'Il comando base è  "/7s N" dove N è il numero di dadi che tirerai!\n' 
+                    +'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
+                    +'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
+                    +'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
                     +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
-                    +'(Viva la CarbonaraRoleplay)\n'  ;
+                    +'(Viva la CarbonaraRoleplay ;) )\n'
+                    +'-----------'
+                    +'Hello sailor!\n'
+                    + 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
+                    + 'By adding "e" every 10 will retire another dice! \n'
+                    + 'By adding "b N" you will add the bonus N to each die rolled \n'
+                    + 'By adding "t  N" will change the threshold to N (default is 10) \n'
+                    + 'For eng result add uk to the command \n';
                     break; 
-                case 'help':
-                    respond.what = 'Hello sailor!\n'
-                    + 'The basic command is "/ 7s roll N" where N is the number of dice you will roll! \n'
-                    + 'By adding "explode" every 10 will retire another dice! \n'
-                    + 'By adding "bonus N" you will add the bonus N to each die rolled \n'
-                    + 'By adding "threshold N" will change the threshold to N (default is 10) \n';
+                case 'help': 
+                    respond.what = 'Ciao marinaio!\n'
+                    +'Il comando base è  "/7s N" dove N è il numero di dadi che tirerai!\n' 
+                    +'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
+                    +'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
+                    +'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
+                    +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
+                    +'(Viva la CarbonaraRoleplay)\n'
+                    +'-----------'
+                    +'Hello sailor!\n'
+                    + 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
+                    + 'By adding "e" every 10 will retire another dice! \n'
+                    + 'By adding "b N" you will add the bonus N to each die rolled \n'
+                    + 'By adding "t  N" will change the threshold to N (default is 10) \n'
+                    + 'For eng result add uk to the command \n';
                     break;
                 default:
                     if(isNaN(cmd)){
-                        respond.what = 'digita /7s aiuto\ntype /7s help';
+                        respond.what = 'Try /7s help';
                     }else{
                         var bonus =  0;
                         var soglia= 10;
-                    
+                        var villan= 0;
+                        var lenguage='ita';
                         if(args.includes('s')){
                             var index= args.indexOf('s');
                             soglia=args[index+1];
@@ -118,12 +134,19 @@ module.exports = {
                             bonus=args[index+1];
                         }
                         var esplosioni=args.includes('e'); 
-                        respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),esplosioni,'ita');
+                        if(args.includes('u')){
+                            lenguage='eng';
+                        }
+                        if(args.includes('v')){
+                            var index= args.indexOf('v');
+                            villan=args[index+1];
+                        }
+                        respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,lenguage);
                     }
                     break;
             }
         } else {
-            respond.what = 'digita /7s aiuto\ntype /7s help';
+            respond.what = 'Try /7s help';
         }  
         transport.reply('\n' + respond.what);
     }

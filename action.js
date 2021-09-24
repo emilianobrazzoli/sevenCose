@@ -1,15 +1,9 @@
 
+var italicTAG ='*';
+var boldTAG ='**';
+var barratoTAG ='~~';
+var underlineTAG ='__';
 
-/*
-var diceRolled=[  5,4,4,2,2,2,1];
-//var diceRolled=[  10 , 9 ,1 , 7, 4 , 7,6, 4 , 2 , 1];
-//var diceRolled=[11 ,  10 , 10 , 9 ,1 ,  9 ,2,  6, 1 ,  1 ]
-diceRolled.sort(function(a, b){return b-a});
-var consume = diceRolled;
-var result=[];
-console.log("originale:"+diceRolled+"\n");
-result=findCouple(consume,result,10,0,0);
-console.log(" risultato:"+result+"\n"); */
 var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus){
     if(finded.length===0){
         if(diceRolled[firstIndex] +bonus>=success){ //il primo va bene
@@ -75,11 +69,11 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguag
     //console.log("findCouple: "+consume+"; "+ result+"\n"); 
     if(consume.length===0){
         if(lenguage=='ita'){
-            result.push("\n **Incrementi: "+total+"**");
+            result.push("\n "+boldTAG+"Incrementi: "+total+""+boldTAG+"");
             result.push("\n Dadi scartati: "+diceTrash);
         }
         else{
-            result.push("\n **Raises: "+total+"**");
+            result.push("\n "+boldTAG+"Raises: "+total+""+boldTAG+"");
             result.push("\n Discarded dice: "+diceTrash);
         }
         return result;
@@ -114,18 +108,34 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguag
             } 
         }
         if(sum>=success ){
-            result.push("**["+stringResult+"]**"); 
+            result.push(""+boldTAG+"["+stringResult+"]"+boldTAG+""); 
             total=total+1;
         }else{
-            result.push("~~["+stringResult+"]~~"); 
+            result.push(""+barratoTAG+"["+stringResult+"]"+barratoTAG+""); 
             diceTrash=diceTrash+1;
         } 
  
-        return findCouple(consume, result, success, total, diceTrash, bonus);
+        return findCouple(consume, result, success, total, diceTrash, bonus, lenguage);
     } 
-} 
+};
+
+var rollDice = function(diceRolled,totalDice, esplosioni ){ 
+	var currentIndex = 0; 
+    while (0 < totalDice) { 
+        randomIndex = Math.floor(Math.random() * 10)+1;
+        //console.log('Ancora '+totalDice+ ' dadi da tirare');
+        diceRolled[currentIndex] = randomIndex; 
+        currentIndex++;
+        if(!esplosioni || randomIndex!==10){
+            totalDice --;
+        }
+    } 
+    diceRolled.sort(function(a, b){return b-a});
+    return diceRolled;
+};
+
 module.exports = { 
-    roll: function(numberDice, soglia, bonus,esplosioni, lenguage) { 
+    roll: function(numberDice, soglia, bonus, villan,esplosioni, lenguage) { 
         
 		if(numberDice<='0' || isNaN(numberDice)){
             if(lenguage=='ita'){
@@ -138,24 +148,71 @@ module.exports = {
 		}
         //console.log('Tirando '+numberDice+ ' dadi');
         var totalDice = numberDice;
+        var villanDice = 0;
+        var poolvillanDice = 0;
         var message = '';
 		var diceRolled = [];
-		var result = [];
-		var currentIndex = 0; 
-        // While there remain elements to shuffle...
-        while (0 < totalDice) {
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * 10)+1;
-            //console.log('Ancora '+totalDice+ ' dadi da tirare');
-			diceRolled[currentIndex] = randomIndex; 
-            currentIndex++;
-            if(!esplosioni || randomIndex!==10){
-                totalDice --;
+		var villanRolled = [];
+		var poolvillanRolled = [];
+		var result = []; 
+        if(villan>0){
+            villanDice = villan-1;
+            totalDice = totalDice - villanDice;
+            if(totalDice<0){
+                villanDice = numberDice;
+                totalDice = 0;
             }
-        } 
-        diceRolled.sort(function(a, b){return b-a});
+            poolvillanDice = villan;
+        }  
  
+        diceRolled = rollDice(diceRolled, totalDice,esplosioni);
+
+        if(villan>0){
+            villanRolled = rollDice(villanRolled, villanDice, esplosioni);
+            poolvillanRolled = rollDice(poolvillanRolled, poolvillanDice, esplosioni);
+            villanRolled.forEach(vilDice => {
+                diceRolled.push(vilDice);
+            });
+            diceRolled.sort(function(a, b){return b-a});
+        }
+        
         result=findCouple(diceRolled,result,soglia,0,0,bonus, lenguage);  
+        
+        if(villan>0){
+            for (let index = 0; index < result.length-2; index++) {
+                const element = result[index]; 
+                
+                for (let index2 = 0; index2 < villanRolled.length; index2++) {
+                    const vilDice = villanRolled[index2];
+                    var compare = " "+vilDice+" ";
+                    if(element.includes(compare) ){
+                        var firstindex = element.indexOf(compare);
+                        var lastindex =  firstindex+compare.length; 
+                        var result2 = element.slice(0, firstindex) + underlineTAG +compare;
+                        result2 = result2 + underlineTAG + element.slice(lastindex);
+                        result[index]= result2;  
+                        villanRolled.splice(index2, 1); 
+                        break;
+                    }
+                    
+                } 
+            }
+            if(villan>0){
+                var result2=[];
+                result2 = findCouple(poolvillanRolled,result2,1,0,0,bonus, lenguage); 
+                var result3 =[];
+                for (let index = 0; index < result2.length-2; index++) {
+                    var element=result2[index]; 
+                    result3.push(underlineTAG+element+underlineTAG)
+                } 
+                if(lenguage=='ita'){
+                    return " Risultati: "+result+"\n "+underlineTAG+"Risultati villani:"+underlineTAG+" "+result3;
+                }
+                else{
+                    return " Result: "+result+"\n "+underlineTAG+"Villain result:"+underlineTAG+" "+result3; 
+                }
+            }
+        }
 
         if(lenguage=='ita'){
             return " Risultati: "+result; 
@@ -165,3 +222,17 @@ module.exports = {
         }
     }
 };
+
+/*
+var diceRolled=[  5,4,4,2,2,2,1];
+//var diceRolled=[  10 , 9 ,1 , 7, 4 , 7,6, 4 , 2 , 1];
+//var diceRolled=[11 ,  10 , 10 , 9 ,1 ,  9 ,2,  6, 1 ,  1 ]
+diceRolled.sort(function(a, b){return b-a});
+var consume = diceRolled;
+var result=[];
+console.log("originale:"+diceRolled+"\n");
+result=findCouple(consume,result,10,0,0);
+console.log(" risultato:"+result+"\n"); */
+
+var action = require('./action.js');
+console.log(action.roll( 5, 10,0,2, false,'ita'));
