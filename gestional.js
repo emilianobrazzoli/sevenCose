@@ -14,7 +14,7 @@ var help = 'Ciao marinaio!\n'
 + 'By adding "b N" you will add the bonus N to each die rolled \n'
 + 'By adding "t  N" will change the threshold to N (default is 10) \n'
 + 'By adding "v  N" you will add the N villain dice to the pool \n'
-+ 'For eng result add uk to the command \n';;
++ 'For eng result add uk to the command \n';
 
 var split = function( element, argsSplitted){
     for (let index = 0; index < commands.length; index++) {

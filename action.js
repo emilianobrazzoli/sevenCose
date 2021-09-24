@@ -145,8 +145,8 @@ module.exports = {
 			    message =  'Very funny';
             }
             return message;
-		}
-        //console.log('Tirando '+numberDice+ ' dadi');
+		} 
+        
         var totalDice = numberDice;
         var villanDice = 0;
         var poolvillanDice = 0;
@@ -155,6 +155,7 @@ module.exports = {
 		var villanRolled = [];
 		var poolvillanRolled = [];
 		var result = []; 
+
         if(villan>0){
             villanDice = villan-1;
             totalDice = totalDice - villanDice;
@@ -234,5 +235,5 @@ console.log("originale:"+diceRolled+"\n");
 result=findCouple(consume,result,10,0,0);
 console.log(" risultato:"+result+"\n"); */
 
-var action = require('./action.js');
-console.log(action.roll( 5, 10,0,2, false,'ita'));
+//var action = require('./action.js');
+//console.log(action.roll( 5, 10,0,2, false,'ita'));
