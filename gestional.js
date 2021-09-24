@@ -73,7 +73,7 @@ var help ='Hello sailor, add uk for english result!\n'
 var action = require('./action.js');
 var fs = require('fs'); 
 var path = './db.json';
-var checkDb = function(){ //TODO
+var checkDb = function(){ 
     try {
         if (fs.existsSync(path)) {
           return true;
