@@ -223,17 +223,4 @@ module.exports = {
         }
     }
 };
-
-/*
-var diceRolled=[  5,4,4,2,2,2,1];
-//var diceRolled=[  10 , 9 ,1 , 7, 4 , 7,6, 4 , 2 , 1];
-//var diceRolled=[11 ,  10 , 10 , 9 ,1 ,  9 ,2,  6, 1 ,  1 ]
-diceRolled.sort(function(a, b){return b-a});
-var consume = diceRolled;
-var result=[];
-console.log("originale:"+diceRolled+"\n");
-result=findCouple(consume,result,10,0,0);
-console.log(" risultato:"+result+"\n"); */
-
-//var action = require('./action.js');
-//console.log(action.roll( 5, 10,0,2, false,'ita'));
+ 
