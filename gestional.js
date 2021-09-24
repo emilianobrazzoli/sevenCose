@@ -1,4 +1,20 @@
 var commands = ['aiuto','help','t','c','7s','/7s','s','b','e','u','v'];
+var help = 'Ciao marinaio!\n'
++'Il comando base è  "/7s N" dove N è il numero di dadi che tirerai!\n' 
++'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
++'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
++'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
++'Aggiungendo "v N"aggiungerai N dadi spregevoli al tiro\n'
++'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
++'(Viva la CarbonaraRoleplay)\n'
++'-----------\n'
++'Hello sailor!\n'
++ 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
++ 'By adding "e" every 10 will retire another dice! \n'
++ 'By adding "b N" you will add the bonus N to each die rolled \n'
++ 'By adding "t  N" will change the threshold to N (default is 10) \n'
++ 'By adding "v  N" you will add the N villain dice to the pool \n'
++ 'For eng result add uk to the command \n';;
 
 var split = function( element, argsSplitted){
     for (let index = 0; index < commands.length; index++) {
@@ -86,38 +102,10 @@ module.exports = {
                     'https://linktr.ee/CarbonaraRoleplay \n'  ;
                     break;  
                 case 'aiuto':
-                    respond.what = 'Ciao marinaio!\n'
-                    +'Il comando base è  "/7s N" dove N è il numero di dadi che tirerai!\n' 
-                    +'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
-                    +'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
-                    +'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
-                    +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
-                    +'(Viva la CarbonaraRoleplay ;) )\n'
-                    +'-----------'
-                    +'Hello sailor!\n'
-                    + 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
-                    + 'By adding "e" every 10 will retire another dice! \n'
-                    + 'By adding "b N" you will add the bonus N to each die rolled \n'
-                    + 'By adding "t  N" will change the threshold to N (default is 10) \n'
-                    + 'For eng result add uk to the command \n';
+                    respond.what = help;
                     break; 
                 case 'help': 
-                    respond.what = 'Ciao marinaio!\n'
-                    +'Il comando base è  "/7s N" dove N è il numero di dadi che tirerai!\n' 
-                    +'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
-                    +'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
-                    +'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
-                    +'Aggiungendo "v N"aggiungerai N dadi spregevoli al tiro\n'
-                    +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
-                    +'(Viva la CarbonaraRoleplay)\n'
-                    +'-----------\n'
-                    +'Hello sailor!\n'
-                    + 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
-                    + 'By adding "e" every 10 will retire another dice! \n'
-                    + 'By adding "b N" you will add the bonus N to each die rolled \n'
-                    + 'By adding "t  N" will change the threshold to N (default is 10) \n'
-                    + 'By adding "v  N" you will add the N villain dice to the pool \n'
-                    + 'For eng result add uk to the command \n';
+                    respond.what = help;
                     break;
                 default:
                     if(isNaN(cmd)){
