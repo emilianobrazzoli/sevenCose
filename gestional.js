@@ -8,7 +8,7 @@ var help = 'Ciao marinaio!\n'
 +'Se non sbagli troppo i comandi cercherò comunque di capirti!\n' 
 +'(Viva la CarbonaraRoleplay)\n'
 +'-----------\n'
-+'Hello sailor!\n'
++'Hello sailor, add uk for english result!\n'
 + 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
 + 'By adding "e" every 10 will retire another dice! \n'
 + 'By adding "b N" you will add the bonus N to each die rolled \n'
@@ -117,20 +117,20 @@ module.exports = {
                         var lenguage='ita';
                         if(args.includes('s')){
                             var index= args.indexOf('s');
-                            soglia=args[index+1];
+                            soglia=args[index+1], 10;
                         }
                         if(args.includes('b')){
                             var index= args.indexOf('b');
-                            bonus=args[index+1];
+                            bonus=args[index+1], 0;
                         }
-                        var esplosioni=args.includes('e'); 
                         if(args.includes('u')){
                             lenguage='eng';
                         }
                         if(args.includes('v')){
                             var index= args.indexOf('v');
-                            villan=args[index+1];
+                            villan=args[index+1], 0;
                         }
+                        var esplosioni=args.includes('e'); 
                         respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,lenguage);
                     }
                     break;
