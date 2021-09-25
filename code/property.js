@@ -15,7 +15,7 @@ module.exports = {
                 message = 'Try **/7s help**'; 
             break;
             case 'tryita':
-                message = 'Prova **/7s help'; 
+                message = 'Prova **/7s help**'; 
             break;
             case 'carbonaraita':
                 message =  'Un intenditore!\n'
