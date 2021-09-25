@@ -14,3 +14,5 @@ You can add several commands to the roll such as:
 :spaghetti: More details on my creator **/7s carbonara**
 :pirate_flag: :pirate_flag: :pirate_flag: 
 
+:robot: Sono un bot con molto sonno, se sono offline visita: http://settemari.herokuapp.com/
+Tornerò in vita!

@@ -27,7 +27,7 @@ var cmd = function(message) {
 };
 
 bot.on("ready", () => {
-    console.log('Pronto a navigare i sette mari su '+port);
+    console.log('Ready for the seven sea on '+port);
 });
  
 bot.on('message', message => {
@@ -49,6 +49,6 @@ app.listen(port);
 Ciao sono Emiliano di carbonara Roleplay
 seguiteci sui social!
 https://linktr.ee/CarbonaraRoleplay
-Se rubi questo codice miglioralo e magari contattami per dirmi
+Se prendi questo codice miglioralo e magari contattami per dirmi:
 "Grazie bello!"
 */
