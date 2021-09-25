@@ -1,4 +1,4 @@
->>> 
+
 :anchor: **Hello sailor!** :anchor:
 :game_die: The basic command is **/7s N** where N is the number of dice you will roll!
 

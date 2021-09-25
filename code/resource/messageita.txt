@@ -1,4 +1,4 @@
->>> 
+
 :anchor: **Ciao marinaio!** :anchor: 
 :game_die: Il comando base è  **/7s N** dove N è il numero di dadi che tirerai!
 

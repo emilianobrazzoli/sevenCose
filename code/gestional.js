@@ -126,7 +126,7 @@ var commandDice = function(userID, channelID, message, transport, bot) {
     } else {
         respond.what = property.label('try'+channel.len);  
     }  
-    transport.reply('\n' + respond.what);
+    transport.reply('>>> \n' + respond.what);
 };
 
 module.exports = {
