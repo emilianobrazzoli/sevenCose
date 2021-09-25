@@ -6,10 +6,10 @@ module.exports = {
         var message = '';
         switch (label) { 
             case 'helpita': 
-                message ='>>> ' +  fs.readFileSync('./code/resource/messageita.txt',{ encoding: 'utf8' });  
+                message = fs.readFileSync('./code/resource/messageita.txt',{ encoding: 'utf8' });  
             break;
             case 'helpeng':
-                message = '>>> ' +  fs.readFileSync('./code/resource/messageeng.txt',{ encoding: 'utf8' });  
+                message = fs.readFileSync('./code/resource/messageeng.txt',{ encoding: 'utf8' });  
             break;
             case 'tryeng':
                 message = 'Try /7s help'; 
@@ -17,9 +17,14 @@ module.exports = {
             case 'tryita':
                 message = 'Prova /7s help'; 
             break;
-            case 'carbonara':
+            case 'carbonaraita':
                 message =  'Un intenditore!\n'
                 +'Segui il mio creatore sui suoi social assieme ad una manica di pazzi:\n'+
+                'https://linktr.ee/CarbonaraRoleplay \n';
+            break;
+            case 'carbonaraeng':
+                message =  'Hi!\n'
+                +'This bot was made by a dude of carbonararoleplay team:\n'+
                 'https://linktr.ee/CarbonaraRoleplay \n';
             break;
             case 'yessirita':

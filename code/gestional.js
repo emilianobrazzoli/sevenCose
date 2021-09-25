@@ -58,72 +58,79 @@ var splitArgument = function(args){
     return argsSplitted;
 };
 
+var commandDice = function(userID, channelID, message, transport) {
+    
+    var respond = {
+        who: userID,
+        what: 'ERROR: no input recorded',
+        where: channelID
+    };
+
+    var channel = manager.searchChannel(channelID);
+    var args = message.toLowerCase().split(' ');
+    args =splitArgument(args);
+    console.log('commands: '+args);
+
+    if (args.length >= 2) {
+        var cmd = args[1]; 
+        switch (cmd) { 
+            case 'c':
+                respond.what = property.label('carbonara'+channel.len);
+                break;
+            case 'help':  
+                respond.what = property.label('help'+channel.len); 
+                break;
+            case 'eng': 
+                channel.len ='eng';
+                manager.saveChannel(channel);
+                respond.what = property.label('yessir'+channel.len);  
+                break;
+            case 'ita': 
+                channel.len ='ita';
+                manager.saveChannel(channel);
+                respond.what = property.label('yessir'+channel.len);  
+                break;
+            default:
+                if(isNaN(cmd)){
+                    respond.what = property.label('try'+channel.len);  
+                }else{
+                    var bonus =  0;
+                    var soglia= 10;
+                    var villan= 0; 
+                    if(args.includes('s')){
+                        var index= args.indexOf('s');
+                        soglia=args[index+1];
+                        if(!soglia){
+                            soglia=10;
+                        }
+                    }else if(args.includes('t')){
+                        var index= args.indexOf('t');
+                        soglia=args[index+1];
+                        if(!soglia){
+                            soglia=10;
+                        }
+                    }
+                    if(args.includes('b')){
+                        var index= args.indexOf('b');
+                        bonus=args[index+1], 0;
+                    } 
+                    if(args.includes('v')){
+                        var index= args.indexOf('v');
+                        villan=args[index+1], 0;
+                    }
+                    var esplosioni=args.includes('e'); 
+                    respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
+                }
+                break;
+        }
+    } else {
+        respond.what = property.label('try'+channel.len);  
+    }  
+    transport.reply('\n' + respond.what);
+};
+
 module.exports = {
     commandDice: function(userID, channelID, message, transport) {
-        var respond = {
-            who: userID,
-            what: 'ERROR: no input recorded',
-            where: channelID
-        };
-        var channel = manager.searchChannel(channelID);
-        var args = message.toLowerCase().split(' ');
-        args =splitArgument(args);
-        console.log('commands: '+args);
-        if (args.length >= 2) {
-            var cmd = args[1]; 
-            switch (cmd) { 
-                case 'carbonararoleplay':
-                    respond.what = property.label('carbonara');
-                    break;
-                case 'help':  
-                    respond.what = property.label('help'+channel.len); 
-                    break;
-                case 'eng': 
-                    channel.len ='eng';
-                    manager.saveChannel(channel);
-                    respond.what = property.label('yessir'+channel.len);  
-                    break;
-                case 'ita': 
-                    channel.len ='ita';
-                    manager.saveChannel(channel);
-                    respond.what = property.label('yessir'+channel.len);  
-                    break;
-                default:
-                    if(isNaN(cmd)){
-                        respond.what = property.label('try'+channel.len);  
-                    }else{
-                        var bonus =  0;
-                        var soglia= 10;
-                        var villan= 0; 
-                        if(args.includes('s')){
-                            var index= args.indexOf('s');
-                            soglia=args[index+1];
-                            if(!soglia){
-                                soglia=10;
-                            }
-                        }else if(args.includes('t')){
-                            var index= args.indexOf('t');
-                            soglia=args[index+1];
-                            if(!soglia){
-                                soglia=10;
-                            }
-                        }
-                        if(args.includes('b')){
-                            var index= args.indexOf('b');
-                            bonus=args[index+1], 0;
-                        } 
-                        if(args.includes('v')){
-                            var index= args.indexOf('v');
-                            villan=args[index+1], 0;
-                        }
-                        var esplosioni=args.includes('e'); 
-                        respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
-                    }
-                    break;
-            }
-        } else {
-            respond.what = property.label('try'+channel.len);  
-        }  
-        transport.reply('\n' + respond.what);
+        return commandDice(userID, channelID, message, transport);
     }
 };

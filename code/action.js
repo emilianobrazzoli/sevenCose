@@ -61,12 +61,12 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
 var findCouple= function(consume, result, success, total,diceTrash,bonus,language){  
     if(consume.length===0){
         if(language=='ita'){
-            result.push("\n "+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
-            result.push("\n "+property.label('trashdice'+language)+diceTrash);
+            result.push("\n"+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
+            result.push("\n"+property.label('trashdice'+language)+diceTrash);
         }
         else{
-            result.push("\n "+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
-            result.push("\n "+property.label('trashdice'+language)+diceTrash);
+            result.push("\n"+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
+            result.push("\n"+property.label('trashdice'+language)+diceTrash);
         }
         return result;
     }else{
@@ -194,12 +194,16 @@ module.exports = {
                     result3.push( italicTAG+ underlineTAG +boldTAG+element+boldTAG+ underlineTAG+italicTAG)
                 } 
                 if(language=='ita'){  
-                    return property.label('result'+language)+result+",\n "
-                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "+result3;
+                    return property.label('result'+language)+result
+                    +",\n"
+                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "
+                    +result3;
                 }
                 else{
-                    return property.label('result'+language)+result+",\n "
-                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "+result3; 
+                    return property.label('result'+language)+result
+                    +",\n"
+                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "
+                    +result3; 
                 }
             }
         }

@@ -1,7 +1,15 @@
-Hello sailor!
-The basic command is "/ 7s N" where N is the number of dice you will roll! 
-By adding "e" every 10 will retire another dice! 
-By adding "b N" you will add the bonus N to each die rolled 
-By adding "t  N" will change the threshold to N (default is 10) 
-By adding "v  N" you will add the N villain dice to the pool 
-Type /7s ita to change to ita language
+>>> 
+:anchor: **Hello sailor!** :anchor:
+:game_die: The basic command is **/7s N** where N is the number of dice you will roll!
+
+You can add several commands to the roll such as:
+:bomb: By adding **e** every 10 will be withdrawn!
+:heavy_plus_sign: By adding **b N** you will add a bonus N to each die rolled
+:warning: By adding **s N** you will change the rise threshold to N (default is 10)
+:japanese_ogre: By adding **v N** will add N despicable dice to the roll
+
+:flag_it: *Digita **/7s ita** per cambiare in Italiano*
+
+:pirate_flag: :pirate_flag: :pirate_flag: 
+:spaghetti: More details on my creator **/7s carbonara**
+:pirate_flag: :pirate_flag: :pirate_flag: 

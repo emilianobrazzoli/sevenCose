@@ -39,8 +39,7 @@ bot.login(token);
 app.get("/", (request, response) => {
     console.log( "Received a coffee: coffeeeeeeeeeee");
     response.sendStatus(200);
-});
-
+}); 
 app.listen(port);
 
 /*

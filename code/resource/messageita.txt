@@ -1,7 +1,15 @@
-Ciao marinaio!
-Il comando base è  "/7s N" dove N è il numero di dadi che tirerai! 
-Aggiungendo "e" ogni 10 verrà ritirato! 
-Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato 
-Aggiungendo "s N" modificherai la soglia in N (di default è a 10)
-Aggiungendo "v N"aggiungerai N dadi spregevoli al tiro
-Type /7s eng to change to eng lenguage
+>>> 
+:anchor: **Ciao marinaio!** :anchor: 
+:game_die: Il comando base è  **/7s N** dove N è il numero di dadi che tirerai!
+
+Puoi aggiungere diversi comandi al tiro come:
+:bomb: Aggiungendo **e** ogni 10 verrà ritirato! 
+:heavy_plus_sign: Aggiungendo **b N** sommerai una cifra N ad ogni dado tirato 
+:warning: Aggiungendo **s N** modificherai la soglia incremento in N (di default è a 10)
+:japanese_ogre: Aggiungendo **v N** aggiungerai N dadi spregevoli al tiro
+
+:flag_gb: *Type /7s eng to change to eng lenguage*
+
+:pirate_flag: :pirate_flag: :pirate_flag: 
+:spaghetti: Per maggiori dettagli sul creatore **/7s carbonara**
+:pirate_flag: :pirate_flag: :pirate_flag: 
