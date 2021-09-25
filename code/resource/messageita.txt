@@ -14,5 +14,5 @@ Puoi aggiungere diversi comandi al tiro come:
 :spaghetti: Per maggiori dettagli sul creatore **/7s carbonara**
 :pirate_flag: :pirate_flag: :pirate_flag: 
 
-:robot: Sono un bot con molto sonno, se sono offline visita: http://settemari.herokuapp.com/
+:robot: Sono un bot con molto sonno, se sono offline visita: https://settemari.herokuapp.com/
 Tornerò in vita!
