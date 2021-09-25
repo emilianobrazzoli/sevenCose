@@ -2,10 +2,10 @@
     "name": "sevencose",
     "version": "1.0.0",
     "description": "My own Discord bot",
-    "main": "sevenSea.js",
+    "main": "./code/sevenSea.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node code/sevenSea.js"
+        "start": "node ./code/sevenSea.js"
     },
     "engines": {
         "node": "12.x"
