@@ -1,7 +1,7 @@
+/** MAIN */
 var Discord = require("discord.js");
 var gestional = require('./gestional.js'); 
-const express = require('express');
-const path = require('path');
+const express = require('express'); 
 const app = express();  
 
 //INIT .ENV VAR

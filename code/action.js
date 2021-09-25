@@ -1,4 +1,5 @@
-
+/** ESEGUE I COMANDI */
+var property = require('./property.js');
 var italicTAG ='*';
 var boldTAG ='**';
 var barratoTAG ='~~';
@@ -7,16 +8,14 @@ var underlineTAG ='__';
 var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus){
     if(finded.length===0){
         if(diceRolled[firstIndex] +bonus>=success){ //il primo va bene
-            finded = [firstIndex];
-            //console.log("first find ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+            finded = [firstIndex]; 
             return finded; 
         }else{//non trovo subito all'inizio
             grado = 2;
             total=diceRolled[firstIndex];
             thisIndex=diceRolled.length-1;
             finded = [firstIndex];
-            finded.push(0);
-            //console.log("first ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+            finded.push(0); 
             return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
         }
     }
@@ -27,12 +26,10 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
                 total=diceRolled[firstIndex];
                 thisIndex=diceRolled.length-1;
                 finded = [firstIndex];
-                finded.push(0);
-                //console.log("first ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+                finded.push(0); 
                 return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, !onlyEqual,bonus) ;
             }
-            finded = [firstIndex];
-            //console.log("last ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+            finded = [firstIndex]; 
             return finded; //non ho trovato nulla 
         }else{
             grado++; 
@@ -40,8 +37,7 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
             thisIndex=diceRolled.length-(grado-2);
             for (let index = (grado-1) ; index>1; index--) { 
                 finded.push(diceRolled.length-index);
-            }
-            //console.log("add grade ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+            } 
             return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
         }
     }
@@ -52,29 +48,25 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
         const element = finded[index]; 
         total=total+diceRolled[element] +bonus; 
     }   
-    if(onlyEqual && total ==success){ 
-        //console.log("find ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+    if(onlyEqual && total ==success){  
         return finded;
     } 
-    if(!onlyEqual && total >=success){ 
-        //console.log("find ["+diceRolled+"]   "+  firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+    if(!onlyEqual && total >=success){  
         return finded;
     } 
 
-    thisIndex--;
-    //console.log("next ["+diceRolled+"]   "+ firstIndex+" "+thisIndex+" ["+ finded+"] "+ success+" "+ grado+""); 
+    thisIndex--; 
     return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
 };
-var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguage){ 
-    //console.log("findCouple: "+consume+"; "+ result+"\n"); 
+var findCouple= function(consume, result, success, total,diceTrash,bonus,language){  
     if(consume.length===0){
-        if(lenguage=='ita'){
-            result.push("\n "+boldTAG+"Incrementi: "+total+""+boldTAG+"");
-            result.push("\n Dadi scartati: "+diceTrash);
+        if(language=='ita'){
+            result.push("\n "+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
+            result.push("\n "+property.label('trashdice'+language)+diceTrash);
         }
         else{
-            result.push("\n "+boldTAG+"Raises: "+total+""+boldTAG+"");
-            result.push("\n Discarded dice: "+diceTrash);
+            result.push("\n "+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
+            result.push("\n "+property.label('trashdice'+language)+diceTrash);
         }
         return result;
     }else{
@@ -91,8 +83,7 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguag
             consume.splice(0, 1);
             sum=stringResult+bonus;
         }else{   
-            pack.sort(function(a, b){return a-b});
-            //console.log("xxxxx: "+consume+"; "+ pack+"\n"); 
+            pack.sort(function(a, b){return a-b}); 
             pack.forEach(toremove => {
                 if(bonus!==0){
                     stringResult=stringResult+" "+consume[toremove]+"+"+bonus+" ";
@@ -115,15 +106,14 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,lenguag
             diceTrash=diceTrash+1;
         } 
  
-        return findCouple(consume, result, success, total, diceTrash, bonus, lenguage);
+        return findCouple(consume, result, success, total, diceTrash, bonus, language);
     } 
 };
 
 var rollDice = function(diceRolled,totalDice, esplosioni ){ 
 	var currentIndex = 0; 
     while (0 < totalDice) { 
-        randomIndex = Math.floor(Math.random() * 10)+1;
-        //console.log('Ancora '+totalDice+ ' dadi da tirare');
+        randomIndex = Math.floor(Math.random() * 10)+1; 
         diceRolled[currentIndex] = randomIndex; 
         currentIndex++;
         if(!esplosioni || randomIndex!==10){
@@ -135,17 +125,8 @@ var rollDice = function(diceRolled,totalDice, esplosioni ){
 };
 
 module.exports = { 
-    roll: function(numberDice, soglia, bonus, villan,esplosioni, lenguage) { 
+    roll: function(numberDice, soglia, bonus, villan,esplosioni, language) { 
         
-		if(numberDice<='0' || isNaN(numberDice)){
-            if(lenguage=='ita'){
-			    message =  'Molto spiritoso';
-            }
-            else{
-			    message =  'Very funny';
-            }
-            return message;
-		} 
         
         var totalDice = numberDice;
         var villanDice = 0;
@@ -155,6 +136,12 @@ module.exports = {
 		var villanRolled = [];
 		var poolvillanRolled = [];
 		var result = []; 
+
+		if(numberDice<='0' || isNaN(numberDice)){ 
+            message = property.label('funny'+language);
+            return message;
+
+		} 
 
         if(villan>0){
             villanDice = villan-1;
@@ -177,7 +164,7 @@ module.exports = {
             diceRolled.sort(function(a, b){return b-a});
         }
         
-        result=findCouple(diceRolled,result,soglia,0,0,bonus, lenguage);  
+        result=findCouple(diceRolled,result,soglia,0,0,bonus, language);  
         
         if(villan>0){
             for (let index = 0; index < result.length-2; index++) {
@@ -200,26 +187,28 @@ module.exports = {
             }
             if(villan>0){
                 var result2=[];
-                result2 = findCouple(poolvillanRolled,result2,1,0,0,bonus, lenguage); 
+                result2 = findCouple(poolvillanRolled,result2,1,0,0,bonus, language); 
                 var result3 =[];
                 for (let index = 0; index < result2.length-2; index++) {
                     var element=result2[index]; 
                     result3.push( italicTAG+ underlineTAG +boldTAG+element+boldTAG+ underlineTAG+italicTAG)
                 } 
-                if(lenguage=='ita'){
-                    return " Risultati: "+result+",\n "+italicTAG+ underlineTAG +"Dadi Spregevoli:"+ underlineTAG+italicTAG+" "+result3;
+                if(language=='ita'){  
+                    return property.label('result'+language)+result+",\n "
+                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "+result3;
                 }
                 else{
-                    return " Result: "+result+",\n "+italicTAG+ underlineTAG +"Villain result:"+ underlineTAG+italicTAG+" "+result3; 
+                    return property.label('result'+language)+result+",\n "
+                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "+result3; 
                 }
             }
         }
 
-        if(lenguage=='ita'){
-            return " Risultati: "+result; 
+        if(language=='ita'){
+            return property.label('result'+language)+result; 
         }
         else{
-            return " Result: "+result; 
+            return property.label('result'+language)+result; 
         }
     }
 };

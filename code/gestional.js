@@ -1,11 +1,15 @@
+/** GESTISCE I PARAMETRI DI COMANDO */
+var commands = ['aiuto','help','ita','eng','t','c','7s','/7s','s','b','e','v']; 
+var property = require('./property.js');
+var manager = require('./manager.js');
+var action = require('./action.js');
 
 var split = function( element, argsSplitted){
     for (let index = 0; index < commands.length; index++) {
-        const command = commands[index]; 
-        //console.log(command+"   "+ element+"   "+ argsSplitted);
+        const command = commands[index];  
         if(element){
             matches = element.match(/\d+/g);
-            if(element.startsWith(command)){// //endsWith 
+            if(element.startsWith(command)){ 
                 argsSplitted.push(command);
                 if(element!='7s' && element!='/7s' &&  matches && matches[0] && !isNaN(matches[0])){ 
                     var elements= element.split(command); 
@@ -50,92 +54,9 @@ var splitArgument = function(args){
     for (let index = 0; index < args.length; index++) {
         const element = args[index];
         argsSplitted= split(  element, argsSplitted);
-    } 
-         
-    return argsSplitted;
-} 
-var commands = ['aiuto','help','ita','eng','t','c','7s','/7s','s','b','e','v'];
-var aiuto = 'Ciao marinaio!\n'
-+'Il comando base è  "/7s N" dove N è il numero di dadi che tirerai!\n' 
-+'Aggiungendo "e" ogni 10 verrà ritirato!\n' 
-+'Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato\n' 
-+'Aggiungendo "s N" modificherai la soglia in N (di default è a 10)\n'
-+'Aggiungendo "v N"aggiungerai N dadi spregevoli al tiro\n'
-+'Type /7s eng to change to eng lenguage\n';
-var help ='Hello sailor, add uk for english result!\n'
-+ 'The basic command is "/ 7s N" where N is the number of dice you will roll! \n'
-+ 'By adding "e" every 10 will retire another dice! \n'
-+ 'By adding "b N" you will add the bonus N to each die rolled \n'
-+ 'By adding "t  N" will change the threshold to N (default is 10) \n'
-+ 'By adding "v  N" you will add the N villain dice to the pool \n'
-+ 'Type /7s ita to change to ita lenguage\n' ;
-
-var action = require('./action.js');
-var fs = require('fs'); 
-var path = './db.json';
-var checkDb = function(){ 
-    try {
-        if (fs.existsSync(path)) {
-          return true;
-        }
-      } catch(err) {
-        console.error(err)
-      }
-      return false;
-}
-var sessionDb = function(){
-    if(checkDb()){
-        var db = require(path);
-        return db;
-    }else{
-        var db = { titol:'DB di sevenSea', channel: []};
-        var stringed =  JSON.stringify(db);
-        console.log(stringed); 
-        fs.writeFileSync(path, stringed.toString())
-        return sessionDb();
-    }
-}
-var flush = function(sampleObject){
-    fs.writeFile(path, JSON.stringify(sampleObject), (err) => {
-        if (err) {
-            console.error(err);
-            return;
-        };
-        console.log("Flush with success!");
-    });
-} 
-var saveChannel = function(channelToSave){
-    var found = false;
-    var db = sessionDb();
-    db.channel.forEach(channel => {
-        if(channel.id === channelToSave.id){
-            channel = channelToSave;
-            found = true; 
-        }
-    });
-    if(!found){
-        db.channel.push(channelToSave);
-    } 
-    flush(db);
-} 
-var searchChannel = function(channelID){
-    var found = false;
-    var db = sessionDb();
-    var channelToFind = {
-        id: channelID,
-        len: 'eng'
     };
-    db.channel.forEach(channel => {
-        if(channel.id === channelToFind.id){
-            channelToFind = channel;
-            found = true; 
-        }
-    });
-    if(!found){
-        saveChannel(channelToFind);
-    }
-    return channelToFind;
-}  
+    return argsSplitted;
+};
 
 module.exports = {
     commandDice: function(userID, channelID, message, transport) {
@@ -144,49 +65,36 @@ module.exports = {
             what: 'ERROR: no input recorded',
             where: channelID
         };
-        var channel = searchChannel(channelID);
+        var channel = manager.searchChannel(channelID);
         var args = message.toLowerCase().split(' ');
         args =splitArgument(args);
-        console.log('argomienti: '+args);
+        console.log('commands: '+args);
         if (args.length >= 2) {
-            var cmd = args[1];
-
-            //console.log('Comando: '+cmd);
+            var cmd = args[1]; 
             switch (cmd) { 
                 case 'carbonararoleplay':
-                    respond.what = 'Un intenditore!\n'
-                    +'Segui il mio creatore sui suoi social assieme ad una manica di pazzi:\n'+
-                    'https://linktr.ee/CarbonaraRoleplay \n'  ;
+                    respond.what = property.label('carbonara');
                     break;
-                case 'help': 
-                    if(channel.len==='ita'){
-                        respond.what = aiuto;
-                    }else{
-                        respond.what = help;
-                    }
+                case 'help':  
+                    respond.what = property.label('help'+channel.len); 
                     break;
                 case 'eng': 
                     channel.len ='eng';
-                    saveChannel(channel);
-                    respond.what = 'Yes sir!';
+                    manager.saveChannel(channel);
+                    respond.what = property.label('yessir'+channel.len);  
                     break;
                 case 'ita': 
                     channel.len ='ita';
-                    saveChannel(channel);
-                    respond.what = 'Sì signore!';
+                    manager.saveChannel(channel);
+                    respond.what = property.label('yessir'+channel.len);  
                     break;
                 default:
                     if(isNaN(cmd)){
-                        if(channel.len==='ita'){
-                            respond.what = 'Prova /7s help';
-                        }else{
-                            respond.what = 'Try /7s help';
-                        }
+                        respond.what = property.label('try'+channel.len);  
                     }else{
                         var bonus =  0;
                         var soglia= 10;
-                        var villan= 0;
-                        var lenguage='ita';
+                        var villan= 0; 
                         if(args.includes('s')){
                             var index= args.indexOf('s');
                             soglia=args[index+1];
@@ -214,11 +122,7 @@ module.exports = {
                     break;
             }
         } else {
-            if(channel.len==='ita'){
-                respond.what = 'Prova /7s help';
-            }else{
-                respond.what = 'Try /7s help';
-            }
+            respond.what = property.label('try'+channel.len);  
         }  
         transport.reply('\n' + respond.what);
     }

@@ -2,10 +2,10 @@
     "name": "sevencose",
     "version": "1.0.0",
     "description": "My own Discord bot",
-    "main": "arcanacrown.js",
+    "main": "sevenSea.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node sevenCose.js"
+        "start": "node code/sevenSea.js"
     },
     "engines": {
         "node": "12.x"

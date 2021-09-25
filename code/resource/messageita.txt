@@ -1,0 +1,7 @@
+Ciao marinaio!
+Il comando base è  "/7s N" dove N è il numero di dadi che tirerai! 
+Aggiungendo "e" ogni 10 verrà ritirato! 
+Aggiungendo "b N" sommerai una cifra N ad ogni dado tirato 
+Aggiungendo "s N" modificherai la soglia in N (di default è a 10)
+Aggiungendo "v N"aggiungerai N dadi spregevoli al tiro
+Type /7s eng to change to eng lenguage

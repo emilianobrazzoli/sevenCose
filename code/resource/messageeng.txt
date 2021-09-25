@@ -1,0 +1,7 @@
+Hello sailor!
+The basic command is "/ 7s N" where N is the number of dice you will roll! 
+By adding "e" every 10 will retire another dice! 
+By adding "b N" you will add the bonus N to each die rolled 
+By adding "t  N" will change the threshold to N (default is 10) 
+By adding "v  N" you will add the N villain dice to the pool 
+Type /7s ita to change to ita language
