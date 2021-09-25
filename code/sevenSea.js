@@ -37,8 +37,8 @@ bot.on('message', message => {
 bot.login(token); 
 
 app.get("/", (request, response) => {
-    console.log( "Received a coffee: coffeeeeeeeeeee");
-    response.sendStatus(200);
+    console.log( "Received a coffee: coffeeeeeeeeeee"); 
+    response.sendFile('home.html' , { root: './code/resource/' })
 }); 
 app.get('/logo.png',function(req,res) {
     res.sendFile('logo.png' , { root: './code/resource/' })
