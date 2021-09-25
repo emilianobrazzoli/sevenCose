@@ -1,21 +1,21 @@
 /** MANEGGIA LE LABEL */
 var fs = require('fs'); 
+var logo = 'https://panels-images.twitch.tv/panel-100479319-image-c51aa119-4ff0-45c3-8cdc-b43f91620ca7';
  
 module.exports = {
     label: function(label) {
         var message = '';
         switch (label) { 
             case 'helpita': 
-                message = fs.readFileSync('./code/resource/messageita.txt',{ encoding: 'utf8' });  
-            break;
+                message = fs.readFileSync('./code/resource/messageita.txt',{ encoding: 'utf8' });
             case 'helpeng':
-                message = fs.readFileSync('./code/resource/messageeng.txt',{ encoding: 'utf8' });  
+                message = fs.readFileSync('./code/resource/messageeng.txt',{ encoding: 'utf8' });
             break;
             case 'tryeng':
-                message = 'Try /7s help'; 
+                message = 'Try **/7s help**'; 
             break;
             case 'tryita':
-                message = 'Prova /7s help'; 
+                message = 'Prova **/7s help'; 
             break;
             case 'carbonaraita':
                 message =  'Un intenditore!\n'
@@ -62,6 +62,9 @@ module.exports = {
             break; 
             case 'trashdiceita':
                 message =  'Dadi scartati: ';
+            break; 
+            case 'logo':
+                message = logo;
             break; 
             default:
                 message = '';

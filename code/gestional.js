@@ -58,7 +58,7 @@ var splitArgument = function(args){
     return argsSplitted;
 };
 
-var commandDice = function(userID, channelID, message, transport) {
+var commandDice = function(userID, channelID, message, transport, bot) {
     
     var respond = {
         who: userID,
@@ -130,7 +130,7 @@ var commandDice = function(userID, channelID, message, transport) {
 };
 
 module.exports = {
-    commandDice: function(userID, channelID, message, transport) {
-        return commandDice(userID, channelID, message, transport);
+    commandDice: function(userID, channelID, message, transport, bot) {
+        return commandDice(userID, channelID, message, transport, bot);
     }
 };

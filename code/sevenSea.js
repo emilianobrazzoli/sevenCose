@@ -22,7 +22,7 @@ var cmd = function(message) {
     //console.log('Comando arrivato');
     if (message.content.substring(0, 3) == '/7s' || message.content.substring(0, 3) == '/7S'  ) {
         console.log(message.author.id+' in '+ message.channel.id+' do '+ message.content.toString());
-        gestional.commandDice(message.author.id, message.channel.id, message.content.toString().toLowerCase(), message);
+        gestional.commandDice(message.author.id, message.channel.id, message.content.toString().toLowerCase(), message, bot);
     }  
 };
 
@@ -39,6 +39,9 @@ bot.login(token);
 app.get("/", (request, response) => {
     console.log( "Received a coffee: coffeeeeeeeeeee");
     response.sendStatus(200);
+}); 
+app.get('/logo.png',function(req,res) {
+    res.sendFile('logo.png' , { root: './code/resource/' })
 }); 
 app.listen(port);
 
