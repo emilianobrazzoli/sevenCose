@@ -27,6 +27,15 @@ var cmd = function(message) {
 };
 
 bot.on("ready", () => {
+    
+    bot.user.setPresence({
+        status: 'online',
+        activity: {
+            name: 'Preparing carbonara',
+            type: 'STREAMING',
+            url: 'https://www.twitch.tv/carbonararoleplay'
+        }
+    });
     console.log('Ready for the seven sea on '+port);
 });
  
