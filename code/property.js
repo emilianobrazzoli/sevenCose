@@ -70,6 +70,12 @@ module.exports = {
             case 'vilDesceng':
                 message =  '**Bold dice are villain dice**';
                 break; 
+            case 'corruptita':
+                message =  'Punti corruzione ';
+                break; 
+            case 'corrupteng':
+                message =  'Corruption point ';
+                break; 
             case 'logo':
                 message = logo;
                 break; 

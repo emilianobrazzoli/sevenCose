@@ -130,6 +130,7 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                     var bonus =  0;
                     var soglia= 10;
                     var villan= 0; 
+                    var numberDice= args[1]; 
                     if(args.includes('s')){
                         var index= args.indexOf('s');
                         soglia=args[index+1];
@@ -152,15 +153,59 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                         villan=args[index+1], 0;
                     }
                     var esplosioni=args.includes('e');  
-                    var rtrn =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len); 
-                    if(parseInt(villan)>0){
-                        response.push(addResponse(userID,channelID,rtrn.raises, 
-                            property.label('result'+channel.len)+rtrn.dice+"\n"+rtrn.trashdice+"\n"+property.label('vilDesc'+channel.len)
-                            , green));
-                        response.push(addResponse(userID,channelID,rtrn.villanDescr, rtrn.villanDice+"\n", red));
-                    }else{ 
-                        response.push(addResponse(userID,channelID,rtrn.raises, property.label('result'+channel.len)+rtrn.dice+"\n"+rtrn.trashdice, green));
+
+                    
+                    if(numberDice<='0' || isNaN(numberDice) || numberDice>50){ 
+                        message = property.label('funny'+language); 
+
+                    }else{
+
+                        var rtrn =  action.roll( numberDice, parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);  
+    
+                        if(parseInt(villan)>0){
+                            response.push(
+                                addResponse(
+                                    userID,
+                                    channelID,
+                                    property.label('raises'+channel.len)+rtrn.raises, 
+                                    property.label('result'+channel.len)+rtrn.dice+"\n"
+                                        +property.label('trashdice'+channel.len)
+                                        +rtrn.trashdice
+                                        +"\n"
+                                        +property.label('vilDesc'+channel.len), 
+                                    green
+                                )
+                            );
+                            response.push(
+                                addResponse(
+                                    userID,
+                                    channelID,
+                                    property.label('villaindice'+channel.len),
+                                    rtrn.villanDice
+                                        +"\n"
+                                        +property.label('corrupt'+channel.len)
+                                        +rtrn.corruption,
+                                    red
+                                )
+                            );
+                        }else{ 
+                            response.push(
+                                addResponse(
+                                    userID,
+                                    channelID,
+                                    property.label('raises'+channel.len)+rtrn.raises, 
+                                    property.label('result'+channel.len)
+                                        +rtrn.dice
+                                        +"\n"
+                                        +property.label('trashdice'+channel.len)
+                                        +rtrn.trashdice, 
+                                    green
+                                )
+                            );
+                        }
                     }
+
+
                 }
                 break;
         }

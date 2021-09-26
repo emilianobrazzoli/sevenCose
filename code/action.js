@@ -1,5 +1,4 @@
-/** ESEGUE I COMANDI */
-var property = require('./property.js');
+/** ESEGUE I COMANDI */ 
 var italicTAG ='*';
 var boldTAG ='**';
 var barratoTAG ='~~';
@@ -68,8 +67,8 @@ var findCouple= function(consume, result, success, total,diceTrash,bonus,languag
             trashdice: ''
         }
         rturn.dice = result;
-        rturn.raises=(boldTAG+property.label('raises'+language)+total+boldTAG);
-        rturn.trashdice=(property.label('trashdice'+language)+diceTrash);
+        rturn.raises= total;
+        rturn.trashdice= diceTrash;
         
         return rturn;
     }else{
@@ -133,18 +132,11 @@ module.exports = {
         
         var totalDice = numberDice;
         var villanDice = 0;
-        var poolvillanDice = 0;
-        var message = '';
+        var poolvillanDice = 0; 
 		var diceRolled = [];
 		var villanRolled = [];
 		var poolvillanRolled = [];
 		var result = []; 
-
-		if(numberDice<='0' || isNaN(numberDice) || numberDice>50){ 
-            message = property.label('funny'+language);
-            return message;
-
-		} 
 
         if(villan>0){
             villanDice = villan-1;
@@ -157,7 +149,10 @@ module.exports = {
         }  
  
         diceRolled = rollDice(diceRolled, totalDice,esplosioni);
-
+        var originalDice = []; 
+        diceRolled.forEach(dice => {
+            originalDice.push(dice);
+        });
         if(villan>0){
             villanRolled = rollDice(villanRolled, villanDice, esplosioni);
             poolvillanRolled = rollDice(poolvillanRolled, poolvillanDice, esplosioni);
@@ -169,7 +164,12 @@ module.exports = {
          
         var rtrn=findCouple(diceRolled,result,soglia,0,0,bonus, language);  
         
-        if(villan>0){
+        if(villan>0){ 
+    
+            var result2 = []; 
+            var rtrnDiceNoVill=findCouple(originalDice,result2,soglia,0,0,bonus, language);  
+            rtrn.corruption = rtrn.raises - rtrnDiceNoVill.raises;
+            
             for (let index = 0; index < rtrn.dice.length; index++) {
                 const element = rtrn.dice[index]; 
                 
@@ -185,8 +185,7 @@ module.exports = {
                         rtrn.dice[index]= result2;  
                         villanRolled.splice(index2, 1); 
                         break;
-                    }
-                    
+                    } 
                 } 
             }
             if(villan>0){ 
@@ -195,7 +194,6 @@ module.exports = {
                 for (let index = 0; index < rtrn2.dice.length; index++) { 
                     result2[index]=(  boldTAG+result2[index]+boldTAG)
                 }  
-                rtrn.villanDescr = property.label('villaindice'+language); 
                 rtrn.villanDice = boldTAG+rtrn2.dice+boldTAG;
                 
             }
