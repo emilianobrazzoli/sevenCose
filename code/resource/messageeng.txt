@@ -1,6 +1,6 @@
 
 
-:anchor: **Hello sailor!** :anchor:
+:anchor: **Ahoy sailor!** :anchor:
 :game_die: The basic command is **/7s N** where N is the number of dice you will roll!
 
 You can add several commands to the roll such as:
