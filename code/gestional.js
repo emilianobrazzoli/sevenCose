@@ -73,13 +73,16 @@ var displayMessage= function (response, transport ){
                     "value":  respond.what, 
                     "inline": false 
                 } ] 
-            } 
+            }
         };  
+        if(response.image){
+            newMessage.embed.image=response.image;
+        }
         transport.reply(newMessage); 
     });
 };
 
-var addResponse = function(userID,channelID,title, descr, color){
+var addResponse = function(userID,channelID,title, descr, color, image){
   
     var respond = {
         title: title,
@@ -87,7 +90,10 @@ var addResponse = function(userID,channelID,title, descr, color){
         what: descr,
         where: channelID,
         color: color
-    };//TODO
+    };
+    if(image){
+        respond.image=image;
+    }
     return respond;
 };
 var commandDice = function(userID, channelID, message, transport, bot) {
@@ -145,13 +151,15 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                         var index= args.indexOf('v');
                         villan=args[index+1], 0;
                     }
-                    var esplosioni=args.includes('e'); 
-                    //respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
-                    var rtrn =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
-                    response.push(addResponse(userID,channelID,rtrn.raises, property.label('result'+channel.len)+rtrn.dice+"\n"+rtrn.trashdice, green));
-                    //TODO
+                    var esplosioni=args.includes('e');  
+                    var rtrn =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len); 
                     if(parseInt(villan)>0){
+                        response.push(addResponse(userID,channelID,rtrn.raises, 
+                            property.label('result'+channel.len)+rtrn.dice+"\n"+rtrn.trashdice+"\n"+property.label('vilDesc'+channel.len)
+                            , green));
                         response.push(addResponse(userID,channelID,rtrn.villanDescr, rtrn.villanDice+"\n", red));
+                    }else{ 
+                        response.push(addResponse(userID,channelID,rtrn.raises, property.label('result'+channel.len)+rtrn.dice+"\n"+rtrn.trashdice, green));
                     }
                 }
                 break;

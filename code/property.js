@@ -64,6 +64,12 @@ module.exports = {
             case 'trashdiceita':
                 message =  'Dadi scartati: ';
                 break; 
+            case 'vilDescita':
+                message =  '**I dadi in grasseto sono spregevoli**';
+                break; 
+            case 'vilDesceng':
+                message =  '**Bold dice are villain dice**';
+                break; 
             case 'logo':
                 message = logo;
                 break; 
