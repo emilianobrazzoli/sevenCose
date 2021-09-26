@@ -60,15 +60,18 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
 };
 var findCouple= function(consume, result, success, total,diceTrash,bonus,language){  
     if(consume.length===0){
-        if(language=='ita'){
-            result.push("\n"+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
-            result.push("\n"+property.label('trashdice'+language)+diceTrash);
+        var rturn = {
+            dice: [],
+            villanDice: [],
+            villanDescr: '',
+            raises: '',
+            trashdice: ''
         }
-        else{
-            result.push("\n"+boldTAG+property.label('raises'+language)+total+""+boldTAG+"");
-            result.push("\n"+property.label('trashdice'+language)+diceTrash);
-        }
-        return result;
+        rturn.dice = result;
+        rturn.raises=(boldTAG+property.label('raises'+language)+total+boldTAG);
+        rturn.trashdice=(property.label('trashdice'+language)+diceTrash);
+        
+        return rturn;
     }else{
  
         var sum= 0;
@@ -163,12 +166,12 @@ module.exports = {
             });
             diceRolled.sort(function(a, b){return b-a});
         }
-        
-        result=findCouple(diceRolled,result,soglia,0,0,bonus, language);  
+         
+        var rtrn=findCouple(diceRolled,result,soglia,0,0,bonus, language);  
         
         if(villan>0){
-            for (let index = 0; index < result.length-2; index++) {
-                const element = result[index]; 
+            for (let index = 0; index < rtrn.dice.length; index++) {
+                const element = rtrn.dice[index]; 
                 
                 for (let index2 = 0; index2 < villanRolled.length; index2++) {
                     const vilDice = villanRolled[index2];
@@ -176,44 +179,28 @@ module.exports = {
                     if(element.includes(compare) ){
                         var firstindex = element.indexOf(compare);
                         var lastindex =  firstindex+compare.length; 
-                        var result2 = element.slice(0, firstindex) + italicTAG+ underlineTAG +boldTAG+compare;
-                        result2 = result2 +boldTAG+ underlineTAG+italicTAG + element.slice(lastindex);
-                        result[index]= result2;  
+                        var before = element.slice(0, firstindex);
+                        var after = " " +element.slice(lastindex); 
+                        var result2 = before +boldTAG+compare +boldTAG + after;
+                        rtrn.dice[index]= result2;  
                         villanRolled.splice(index2, 1); 
                         break;
                     }
                     
                 } 
             }
-            if(villan>0){
-                var result2=[];
-                result2 = findCouple(poolvillanRolled,result2,1,0,0,bonus, language); 
+            if(villan>0){ 
                 var result3 =[];
-                for (let index = 0; index < result2.length-2; index++) {
-                    var element=result2[index]; 
-                    result3.push( italicTAG+ underlineTAG +boldTAG+element+boldTAG+ underlineTAG+italicTAG)
-                } 
-                if(language=='ita'){  
-                    return property.label('result'+language)+result
-                    +",\n"
-                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "
-                    +result3;
-                }
-                else{
-                    return property.label('result'+language)+result
-                    +",\n"
-                    +italicTAG+ underlineTAG +property.label('villaindice'+language)+ underlineTAG+italicTAG+" "
-                    +result3; 
-                }
+                var rtrn2 = findCouple(poolvillanRolled,result3,1,0,0,bonus, language); 
+                for (let index = 0; index < rtrn2.dice.length; index++) { 
+                    result2[index]=(  boldTAG+result2[index]+boldTAG)
+                }  
+                rtrn.villanDescr = property.label('villaindice'+language); 
+                rtrn.villanDice = boldTAG+rtrn2.dice+boldTAG;
+                
             }
         }
-
-        if(language=='ita'){
-            return property.label('result'+language)+result; 
-        }
-        else{
-            return property.label('result'+language)+result; 
-        }
+        return rtrn;  
     }
 };
  

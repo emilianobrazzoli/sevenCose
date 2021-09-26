@@ -58,41 +58,68 @@ var splitArgument = function(args){
     return argsSplitted;
 };
 
-var commandDice = function(userID, channelID, message, transport, bot) {
-    
+var green = 3447003;
+var red = 15158332;
+var white = 16777215;
+var yellow = 16705372;
+
+var displayMessage= function (response, transport ){ 
+    response.forEach(respond => {
+        let newMessage = { 
+            "embed": { 
+                "color": respond.color , 
+                "fields": [{ 
+                    "name": respond.title, 
+                    "value":  respond.what, 
+                    "inline": false 
+                } ] 
+            } 
+        };  
+        transport.reply(newMessage); 
+    });
+};
+
+var addResponse = function(userID,channelID,title, descr, color){
+  
     var respond = {
+        title: title,
         who: userID,
-        what: 'ERROR: no input recorded',
-        where: channelID
-    };
+        what: descr,
+        where: channelID,
+        color: color
+    };//TODO
+    return respond;
+};
+var commandDice = function(userID, channelID, message, transport, bot) {
+    var response =[];
 
     var channel = manager.searchChannel(channelID);
     var args = message.toLowerCase().split(' ');
     args =splitArgument(args);
-    console.log('commands: '+args);
+    console.log(channel.len+' commands: '+args);
 
     if (args.length >= 2) {
         var cmd = args[1]; 
         switch (cmd) { 
             case 'c':
-                respond.what = property.label('carbonara'+channel.len);
+                response.push(addResponse(userID,channelID,'Carbonara', property.label('carbonara'+channel.len), yellow)); 
                 break;
             case 'help':  
-                respond.what = property.label('help'+channel.len); 
+                response.push(addResponse(userID,channelID,'Help', property.label('help'+channel.len), yellow));
                 break;
             case 'eng': 
                 channel.len ='eng';
                 manager.saveChannel(channel);
-                respond.what = property.label('yessir'+channel.len);  
+                response.push(addResponse(userID,channelID,'English', property.label('yessir'+channel.len), yellow)); 
                 break;
             case 'ita': 
                 channel.len ='ita';
                 manager.saveChannel(channel);
-                respond.what = property.label('yessir'+channel.len);  
+                response.push(addResponse(userID,channelID,'Italiano', property.label('yessir'+channel.len), yellow));  
                 break;
             default:
                 if(isNaN(cmd)){
-                    respond.what = property.label('try'+channel.len);  
+                    response.push(addResponse(userID,channelID,'Need help?', property.label('try'+channel.len), yellow));   
                 }else{
                     var bonus =  0;
                     var soglia= 10;
@@ -119,14 +146,21 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                         villan=args[index+1], 0;
                     }
                     var esplosioni=args.includes('e'); 
-                    respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
+                    //respond.what =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
+                    var rtrn =  action.roll( args[1], parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);
+                    response.push(addResponse(userID,channelID,rtrn.raises, property.label('result'+channel.len)+rtrn.dice+"\n"+rtrn.trashdice, green));
+                    //TODO
+                    if(parseInt(villan)>0){
+                        response.push(addResponse(userID,channelID,rtrn.villanDescr, rtrn.villanDice+"\n", red));
+                    }
                 }
                 break;
         }
     } else {
-        respond.what = property.label('try'+channel.len);  
+        response.push(addResponse(userID,channelID,'Need help?', property.label('try'+channel.len), yellow));    
     }  
-    transport.reply(' \n>>> ' + respond.what);
+    displayMessage(response, transport);//TODO
+    
 };
 
 module.exports = {
