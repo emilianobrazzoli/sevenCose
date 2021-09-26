@@ -140,7 +140,7 @@ module.exports = {
 		var poolvillanRolled = [];
 		var result = []; 
 
-		if(numberDice<='0' || isNaN(numberDice)){ 
+		if(numberDice<='0' || isNaN(numberDice) || numberDice>50){ 
             message = property.label('funny'+language);
             return message;
 
