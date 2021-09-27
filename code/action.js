@@ -183,7 +183,7 @@ module.exports = {
             });   
             var rtrnVile=findCouple( anotherTier,soglia,bonus, language);   
             
-            rtrn.corruption =  rtrnVile.raises;
+ 
             var addictionalResult = tagResult(rtrnVile.result,vileRolled);
             addictionalResult.forEach(element => {
                 rtrn.result.push(element);
@@ -192,6 +192,14 @@ module.exports = {
             rtrn.raises=rtrn.raises+rtrnVile.raises;
             rtrn.trashdice=rtrnVile.trashdice;
             
+            rtrn.corruption = 0;
+            rtrnVile.result.forEach(element => {
+                
+                element.forEach(dice => { 
+                    if(dice.vile)
+                    rtrn.corruption++;
+                });
+            });
             rtrn.vileDice =[];
             poolvileRolled.forEach(element => {
                 rtrn.vileDice.push([{ dice: element, bonus: bonus, vile: true }]);  
