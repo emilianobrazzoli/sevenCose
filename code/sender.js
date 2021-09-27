@@ -1,6 +1,5 @@
-
-var mergeImages = require('merge-image'); 
-const { Canvas, Image } = require('canvas');
+const mergeImages = require('merge-images');
+const { Canvas, Image } = require('canvas');  
 var green = 3447003;
 var red = 15158332;
 var white = 16777215;
