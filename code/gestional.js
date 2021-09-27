@@ -107,6 +107,17 @@ var stringerDices = function(dices, tag) {
     });
     return message+']'
 }
+var imageDices = function(dices, burned) {
+    var message = '[';
+    dices.forEach(dice => {   
+        if(dice.vile){
+            message += " "+property.bold()+dice.dice+property.bold()+" ";
+        }else{
+            message += " "+tag+dice.dice+tag+" ";
+        } 
+    });
+    return message+']'
+}
 
 
 var retunVileMessge = function(rtrn,len){
@@ -226,9 +237,7 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                                 )
                             );
                         } 
-                    }
-
-
+                    }  
                 }
                 break;
         }
