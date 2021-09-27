@@ -53,6 +53,30 @@ module.exports = {
             case 'helpeng':
                 message = fs.readFileSync('./code/resource/messageeng.txt',{ encoding: 'utf8' });
                 break;
+            case 'Helpita': 
+                message = 'Guida';
+                break;
+            case 'Carbonaraita':
+                message = 'Carbonara';
+                break;
+            case 'Carbonaraeng': 
+                message = 'Carbonara';
+                break;
+            case 'Englisheng':
+                message = 'English';
+                break;
+            case 'Italianoita': 
+                message = 'Italiano';
+                break;
+            case 'Need help?eng':
+                message = 'Need help?';
+                break;
+            case 'Need help?ita': 
+                message = 'Need help?';
+                break;
+            case 'Helpeng':
+                message = 'Commands';
+                break;
             case 'tryeng':
                 message = 'Try **/7s help**'; 
                 break;
@@ -66,7 +90,7 @@ module.exports = {
                 break;
             case 'carbonaraeng':
                 message =  'Hi!\n'
-                +'This bot was made by a dude of carbonararoleplay team:\n'+
+                +'This bot was made by a carbonararoleplay dude:\n'+
                 'https://linktr.ee/CarbonaraRoleplay \n';
                 break;
             case 'yessirita':
