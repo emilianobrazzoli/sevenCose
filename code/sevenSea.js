@@ -50,10 +50,7 @@ app.get("/", (request, response) => {
     response.sendFile('home.html' , { root: './code/resource/' })
 });  
 app.listen(port); 
-app.use('/dice', express.static('public/dice'))
-app.listen(3000, function () {
-    console.log('Listening on http://localhost:3000/');
-});
+app.use('/dice', express.static('public/dice')) 
 /*
 Ciao sono Emiliano di carbonara Roleplay
 seguiteci sui social!
