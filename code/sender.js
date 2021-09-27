@@ -11,8 +11,7 @@ var manager = require('./manager.js');
 
 var displayMessage= function (embeds,message ){ 
     embeds.forEach(element => {
-        //console.log(element);
-        console.log(element);
+        //console.log(element); 
         message.channel.send(element);
     });
 };
@@ -30,8 +29,7 @@ var createEmbendedByResponse = function(response, message, language){
     if(response.decorator){
         value = value+" "+response.decorator;
     }
-    var embed = null;
-    console.log(response);
+    var embed = null; 
     if(response.img){
         mergeImages(response.img, {
             Canvas: Canvas,
