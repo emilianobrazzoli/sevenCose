@@ -1,8 +1,5 @@
-/** ESEGUE I COMANDI */ 
-var italicTAG ='*';
-var boldTAG ='**';
-var barratoTAG ='~~';
-var underlineTAG ='__';
+/** ESEGUE I COMANDI */  
+var boldTAG ='**'; 
 
 var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus){
     if(finded.length===0){
@@ -57,62 +54,73 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
     thisIndex--; 
     return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
 };
-var findCouple= function(consume, result, success, total,diceTrash,bonus,language){  
-    if(consume.length===0){
-        var rturn = {
-            dice: [],
-            villanDice: [],
-            villanDescr: '',
-            raises: '',
-            trashdice: ''
-        }
-        rturn.dice = result;
-        rturn.raises= total;
-        rturn.trashdice= diceTrash;
-        
+var findCoupleAction= function(consume, success,bonus,language,rturn){   
+    if(consume.length===0){    
         return rturn;
     }else{
- 
         var sum= 0;
-        var stringResult ='';
+        var jsonResult =[];
+        var dice = null;
         var pack =ricursiveFindSuccess(consume, 0, (consume.length-1),  [], success,1,true,bonus); 
-        if(!pack && consume){    
-            if(bonus!==0){
-                stringResult=consume[0]+"+"+bonus;
-            }else{
-                stringResult=consume[0]; 
-            }
+        if(!pack && consume){     
+            rturn.discarded.push(dice);
+            jsonResult.push({ dice:consume[0], bonus: bonus });  
             consume.splice(0, 1);
             sum=stringResult+bonus;
+            if(sum>=success ){
+                rturn.consumed.push(dice);
+            }else{
+                rturn.discarded.push(dice);
+            }
         }else{   
             pack.sort(function(a, b){return a-b}); 
             pack.forEach(toremove => {
-                if(bonus!==0){
-                    stringResult=stringResult+" "+consume[toremove]+"+"+bonus+" ";
+                var consumed = consume[toremove];
+                rturn.consumed.push(consumed);
+                jsonResult.push({ dice:consumed, bonus: bonus }); 
+                sum=sum+consumed+bonus;
+                if(pack.length>1 || (consumed+bonus)>=success ){ 
+                    rturn.consumed.push(consumed);
                 }else{
-                    stringResult=stringResult+" "+consume[toremove]+" "; 
-                };  
-                sum=sum+consume[toremove]+bonus;
+                    rturn.discarded.push(consumed); 
+                }
+                
             });
             for (let index = (pack.length-1); index>=0 ; index--) {
                 const element = pack[index];
                 consume.splice(element, 1); 
-                
             } 
-        }
+        }  
         if(sum>=success ){
-            result.push(""+"["+stringResult+"]"+""); 
-            total=total+1;
-        }else{
-            result.push(""+barratoTAG+"["+stringResult+"]"+barratoTAG+""); 
-            diceTrash=diceTrash+1;
+            rturn.result.push(jsonResult); 
+            rturn.raises=rturn.raises+1;  
+        }else{ 
+            rturn.discardedResult.push(jsonResult); 
+            rturn.trashdice=rturn.trashdice+1;  
         } 
  
-        return findCouple(consume, result, success, total, diceTrash, bonus, language);
+        return findCoupleAction(consume, success, bonus, language,rturn);
     } 
 };
+var findCouple = function(consume,success, bonus, language){
+    var rturn = { 
+        raises:0,
+        trashdice:0,
+        discarded: [],
+        consumed: [],
+        discardedResult : [],
+        result : []
+    } 
+    if(consume.length===0){
+        return rturn;
+    }
+    return findCoupleAction(consume, success,  bonus, language, rturn);
+}
 
 var rollDice = function(diceRolled,totalDice, esplosioni ){ 
+    if(totalDice===0){
+        return [];
+    }
 	var currentIndex = 0; 
     while (0 < totalDice) { 
         randomIndex = Math.floor(Math.random() * 10)+1; 
@@ -126,77 +134,70 @@ var rollDice = function(diceRolled,totalDice, esplosioni ){
     return diceRolled;
 };
 
+var tagResult = function(results, dices){  
+    for (let index = 0; index < results.length; index++) {
+        const element = results[index]; 
+        element.forEach(dice => { 
+            for (let index2 = 0; index2 < dices.length; index2++) {
+                const vilDice = dices[index2]; 
+                if(vilDice === dice.dice ){
+                    dice.vile = true;
+                    dices.splice(index2, 1); 
+                    break;
+                } 
+            } 
+        });
+    }  
+    return results;
+}
 module.exports = { 
-    roll: function(numberDice, soglia, bonus, villan,esplosioni, language) { 
+    roll: function(numberDice, soglia, bonus, vile,esplosioni, language) { 
         
         
         var totalDice = numberDice;
-        var villanDice = 0;
-        var poolvillanDice = 0; 
+        var vileDice = 0;
+        var poolvileDice = 0; 
 		var diceRolled = [];
-		var villanRolled = [];
-		var poolvillanRolled = [];
-		var result = []; 
+		var vileRolled = [];
+		var poolvileRolled = []; 
 
-        if(villan>0){
-            villanDice = villan-1;
-            totalDice = totalDice - villanDice;
+        if(vile>0){
+            vileDice = vile-1;
+            totalDice = totalDice - vileDice;
             if(totalDice<0){
-                villanDice = numberDice;
+                vileDice = numberDice;
                 totalDice = 0;
             }
-            poolvillanDice = villan;
+            poolvileDice = vile;
+            vileRolled = rollDice(vileRolled, vileDice, esplosioni); 
+            poolvileRolled = rollDice(poolvileRolled, poolvileDice, esplosioni);
         }  
  
-        diceRolled = rollDice(diceRolled, totalDice,esplosioni);
-        var originalDice = []; 
-        diceRolled.forEach(dice => {
-            originalDice.push(dice);
-        });
-        if(villan>0){
-            villanRolled = rollDice(villanRolled, villanDice, esplosioni);
-            poolvillanRolled = rollDice(poolvillanRolled, poolvillanDice, esplosioni);
-            villanRolled.forEach(vilDice => {
-                diceRolled.push(vilDice);
-            });
-            diceRolled.sort(function(a, b){return b-a});
-        }
-         
-        var rtrn=findCouple(diceRolled,result,soglia,0,0,bonus, language);  
+        diceRolled = rollDice(diceRolled, totalDice,esplosioni); 
+        var rtrn=findCouple(diceRolled,soglia,bonus, language);  
         
-        if(villan>0){ 
-    
-            var result2 = []; 
-            var rtrnDiceNoVill=findCouple(originalDice,result2,soglia,0,0,bonus, language);  
-            rtrn.corruption = rtrn.raises - rtrnDiceNoVill.raises;
+        if(vile>0){ 
+            var anotherTier = rtrn.discarded; 
+            vileRolled.forEach(vilDice => {
+                anotherTier.push(vilDice);
+            });   
+            var rtrnVile=findCouple( anotherTier,soglia,bonus, language);   
             
-            for (let index = 0; index < rtrn.dice.length; index++) {
-                const element = rtrn.dice[index]; 
+            rtrn.corruption =  rtrnVile.raises;
+            var addictionalResult = tagResult(rtrnVile.result,vileRolled);
+            addictionalResult.forEach(element => {
+                rtrn.result.push(element);
+            });
+            rtrn.discardedResult = tagResult(rtrnVile.discardedResult,vileRolled);
+            rtrn.raises=rtrn.raises+rtrnVile.raises;
+            rtrn.trashdice=rtrnVile.trashdice;
+            
+            rtrn.vileDice =[];
+            poolvileRolled.forEach(element => {
+                rtrn.vileDice.push([{ dice: element, bonus: bonus, vile: true }]);  
+            });
                 
-                for (let index2 = 0; index2 < villanRolled.length; index2++) {
-                    const vilDice = villanRolled[index2];
-                    var compare = " "+vilDice+" ";
-                    if(element.includes(compare) ){
-                        var firstindex = element.indexOf(compare);
-                        var lastindex =  firstindex+compare.length; 
-                        var before = element.slice(0, firstindex);
-                        var after = " " +element.slice(lastindex); 
-                        var result2 = before +boldTAG+compare +boldTAG + after;
-                        rtrn.dice[index]= result2;  
-                        villanRolled.splice(index2, 1); 
-                        break;
-                    } 
-                } 
-            }
-            if(villan>0){ 
-                var result3 =[];
-                var rtrn2 = findCouple(poolvillanRolled,result3,1,0,0,bonus, language); 
-                for (let index = 0; index < rtrn2.dice.length; index++) { 
-                    result2[index]=(  boldTAG+result2[index]+boldTAG)
-                }  
-                rtrn.villanDice = boldTAG+rtrn2.dice+boldTAG;
                 
-            }
         }
         return rtrn;  
     }

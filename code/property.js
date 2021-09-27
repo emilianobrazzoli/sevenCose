@@ -1,8 +1,18 @@
 /** MANEGGIA LE LABEL */
 var fs = require('fs'); 
+var italicTAG ='*';
+var boldTAG ='**';
+var barratoTAG ='~~';
+var underlineTAG ='__';
 var logo = 'https://panels-images.twitch.tv/panel-100479319-image-c51aa119-4ff0-45c3-8cdc-b43f91620ca7';
  
 module.exports = {
+    bold: function() {
+        return boldTAG;
+    },
+    barra: function() {
+        return barratoTAG;
+    },
     label: function(label) {
         var message = '';
         switch (label) { 
@@ -46,11 +56,11 @@ module.exports = {
             case 'resulteng':
                 message =  'Result: ';
                 break;
-            case 'villaindiceita':
+            case 'vileindiceita':
                 message =  'Dadi Spregevoli ';
                 break;
-            case 'villaindiceeng':
-                message =  'Villain Dice ';
+            case 'vileindiceeng':
+                message =  'Vile Dice ';
                 break; 
             case 'raiseseng':
                 message =  'Raises: ';
@@ -68,7 +78,7 @@ module.exports = {
                 message =  '**I dadi in grasseto sono spregevoli**';
                 break; 
             case 'vilDesceng':
-                message =  '**Bold dice are villain dice**';
+                message =  '**Bold dice are vilein dice**';
                 break; 
             case 'corruptita':
                 message =  'Punti corruzione ';

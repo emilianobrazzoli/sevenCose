@@ -96,6 +96,50 @@ var addResponse = function(userID,channelID,title, descr, color, image){
     }
     return respond;
 };
+var stringerDices = function(dices, tag) {
+    var message = '[';
+    dices.forEach(dice => {   
+        if(dice.vile){
+            message += " "+property.bold()+tag+dice.dice+tag+property.bold()+" ";
+        }else{
+            message += " "+tag+dice.dice+tag+" ";
+        } 
+    });
+    return message+']'
+}
+
+
+var retunVileMessge = function(rtrn,len){
+    
+    var message = '';
+    rtrn.vileDice.forEach(dicesCouple => { 
+        message +=stringerDices(dicesCouple, ''); 
+    });   
+    message+="\n";
+    message+=property.label('corrupt'+len);
+    message+=rtrn.corruption;
+    return message;
+}
+
+var retunResultMessge = function(rtrn,vile,len){
+    var message = '';
+    message +=property.label('result'+len);
+    rtrn.result.forEach(dicesCouple => { 
+        message +=stringerDices(dicesCouple,'');
+    }); 
+    rtrn.discardedResult.forEach(dicesCouple => { 
+        message +=stringerDices(dicesCouple, property.barra()); 
+    }); 
+ 
+    message +="\n";
+    message +=property.label('trashdice'+len) +rtrn.trashdice; 
+    message +="\n";
+    if(vile>0){
+        message +=property.label('vilDesc'+len);
+    }
+    return message;
+}
+
 var commandDice = function(userID, channelID, message, transport, bot) {
     var response =[];
 
@@ -129,7 +173,7 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                 }else{
                     var bonus =  0;
                     var soglia= 10;
-                    var villan= 0; 
+                    var vile= 0; 
                     var numberDice= args[1]; 
                     if(args.includes('s')){
                         var index= args.indexOf('s');
@@ -150,7 +194,7 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                     } 
                     if(args.includes('v')){
                         var index= args.indexOf('v');
-                        villan=args[index+1], 0;
+                        vile=args[index+1], 0;
                     }
                     var esplosioni=args.includes('e');  
 
@@ -160,49 +204,28 @@ var commandDice = function(userID, channelID, message, transport, bot) {
 
                     }else{
 
-                        var rtrn =  action.roll( numberDice, parseInt(soglia),parseInt(bonus),parseInt(villan), esplosioni,channel.len);  
+                        var rtrn =  action.roll( numberDice, parseInt(soglia),parseInt(bonus),parseInt(vile), esplosioni,channel.len);  
     
-                        if(parseInt(villan)>0){
+                        response.push(
+                            addResponse(
+                                userID,
+                                channelID,
+                                property.label('raises'+channel.len)+rtrn.raises,
+                                retunResultMessge(rtrn,vile,channel.len), 
+                                green
+                            )
+                        );
+                        if(parseInt(vile)>0){
                             response.push(
                                 addResponse(
                                     userID,
                                     channelID,
-                                    property.label('raises'+channel.len)+rtrn.raises, 
-                                    property.label('result'+channel.len)+rtrn.dice+"\n"
-                                        +property.label('trashdice'+channel.len)
-                                        +rtrn.trashdice
-                                        +"\n"
-                                        +property.label('vilDesc'+channel.len), 
-                                    green
-                                )
-                            );
-                            response.push(
-                                addResponse(
-                                    userID,
-                                    channelID,
-                                    property.label('villaindice'+channel.len),
-                                    rtrn.villanDice
-                                        +"\n"
-                                        +property.label('corrupt'+channel.len)
-                                        +rtrn.corruption,
+                                    property.label('vileindice'+channel.len),
+                                    retunVileMessge(rtrn,channel.len), 
                                     red
                                 )
                             );
-                        }else{ 
-                            response.push(
-                                addResponse(
-                                    userID,
-                                    channelID,
-                                    property.label('raises'+channel.len)+rtrn.raises, 
-                                    property.label('result'+channel.len)
-                                        +rtrn.dice
-                                        +"\n"
-                                        +property.label('trashdice'+channel.len)
-                                        +rtrn.trashdice, 
-                                    green
-                                )
-                            );
-                        }
+                        } 
                     }
 
 
