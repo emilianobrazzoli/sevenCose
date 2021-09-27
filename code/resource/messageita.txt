@@ -6,8 +6,7 @@
 Puoi aggiungere diversi comandi al tiro come:
 :bomb: Aggiungendo **e** ogni 10 verrà ritirato! 
 :heavy_plus_sign: Aggiungendo **b N** sommerai una cifra N ad ogni dado tirato 
-:warning: Aggiungendo **s N** modificherai la soglia incremento in N (di default è a 10)
-:japanese_ogre: Aggiungendo **v N** aggiungerai N dadi spregevoli al tiro
+:warning: Aggiungendo **s N** modificherai la soglia incremento in N (di default è a 10) 
 
 :flag_gb: *Type /7s eng to change to eng lenguage*
 

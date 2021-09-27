@@ -209,11 +209,11 @@ var commandDice = function(userID, channelID, message, transport, bot) {
                     if(args.includes('b')){
                         var index= args.indexOf('b');
                         bonus=args[index+1], 0;
-                    } 
+                    } /*
                     if(args.includes('v')){
                         var index= args.indexOf('v');
                         vile=args[index+1], 0;
-                    }
+                    }*/
                     var esplosioni=args.includes('e');  
 
                     

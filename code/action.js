@@ -193,11 +193,15 @@ module.exports = {
             rtrn.trashdice=rtrnVile.trashdice;
             
             rtrn.corruption = 0;
-            rtrnVile.result.forEach(element => {
-                
+            rtrnVile.result.forEach(element => { 
                 element.forEach(dice => { 
-                    if(dice.vile)
-                    rtrn.corruption++;
+                    if(dice.vile){
+                        if(rtrn.corruption===0){
+                            rtrn.corruption=1;
+                        }else{ 
+                            rtrn.corruption+=rtrn.corruption;
+                        }
+                    }
                 });
             });
             rtrn.vileDice =[];

@@ -6,9 +6,7 @@
 You can add several commands to the roll such as:
 :bomb: By adding **e** every 10 will be withdrawn!
 :heavy_plus_sign: By adding **b N** you will add a bonus N to each die rolled
-:warning: By adding **s N** you will change the rise threshold to N (default is 10)
-:japanese_ogre: By adding **v N** will add N vile dice to the roll
-
+:warning: By adding **s N** you will change the rise threshold to N (default is 10) 
 :flag_it: *Digita **/7s ita** per cambiare in Italiano*
 
 :pirate_flag: :pirate_flag: :pirate_flag: 
