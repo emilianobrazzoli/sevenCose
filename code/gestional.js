@@ -108,22 +108,22 @@ var stringerDices = function(dices, tag) {
     return message+']'
 }
 var imageDices = function(dices, burned) {
-    var message = '[';
+    var img = [];
     dices.forEach(dice => {   
         if(burned){
             if(dice.vile){
-                message += " "+property.vbdice()+(dice.dice-1)+".png"+" ";
+                img.push( property.vbdice()+(dice.dice-1)+".png");
             }else{
-                message += " "+property.sbdice()+(dice.dice-1)+".png"+" ";
+                img.push( property.sbdice()+(dice.dice-1)+".png");
             } 
         }
         if(dice.vile){
-            message += " "+property.vdice()+(dice.dice-1)+".png"+" ";
+            img.push( property.vdice()+(dice.dice-1)+".png");
         }else{
-            message += " "+property.sdice()+(dice.dice-1)+".png"+" ";
+            img.push( property.sdice()+(dice.dice-1)+".png");
         } 
     });
-    return message+']'
+    return img;
 }
 
 

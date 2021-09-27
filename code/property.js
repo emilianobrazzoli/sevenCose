@@ -94,7 +94,7 @@ module.exports = {
                 message =  '**I dadi in grasseto sono spregevoli**';
                 break; 
             case 'vilDesceng':
-                message =  '**Bold dice are vilein dice**';
+                message =  '**Bold dice are vile dice**';
                 break; 
             case 'corruptita':
                 message =  'Punti corruzione ';
