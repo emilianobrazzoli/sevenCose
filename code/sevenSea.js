@@ -18,8 +18,7 @@ app.use('/src/assets', express.static(__dirname + '/src/assets/'));
 //Initialize Discord Bot
 var bot =  new Discord.Client()
 
-var cmd = function(message) {
-    //console.log('Comando arrivato');
+var cmd = function(message) { 
     if (message.content.substring(0, 3) == '/7s' || message.content.substring(0, 3) == '/7S'  ) {
         gestional.main( message  );
 
@@ -49,26 +48,4 @@ app.get("/", (request, response) => {
     console.log( "Received a coffee: coffeeeeeeeeeee"); 
     response.sendFile('home.html' , { root: './code/resource/' })
 });  
-app.listen(port); 
-  // To pipe received image back to caller 
-// GET request to serve as proxy for images
-/*app.get("/proxy", (req, response) => { ///proxy?url=http://localhost:8080/dice/bdice/d_00003.png
-  const url = req.query.url; 
-  if (url && url.length > 0) {
-    fetch(url)
-      .then(res => res.body.pipe(response))
-      .catch(err => console.log(err))
-  }
-})*/
-/*
-app.use('/dice', express.static('public/dice'))
-app.listen(3000, function () {
-    console.log('Listening on http://localhost:3000/');
-});*/
-/*
-Ciao sono Emiliano di carbonara Roleplay
-seguiteci sui social!
-https://linktr.ee/CarbonaraRoleplay
-Se prendi questo codice miglioralo e magari contattami per dirmi:
-"Grazie bello!"
-*/
+app.listen(port);  
