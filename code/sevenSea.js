@@ -48,24 +48,12 @@ bot.login(token);
 app.get("/", (request, response) => {
     console.log( "Received a coffee: coffeeeeeeeeeee"); 
     response.sendFile('home.html' , { root: './code/resource/' })
-}); 
-app.get('/logo.png',function(req,res) {
-    res.sendFile('logo.png' , { root: './code/resource/' })
-}); 
-app.listen(port);
-
-// Defining port number
-const PORT = 3000;                  
-  
-// Function to serve all static files
-// inside public directory.
-app.use(express.static('public'));  
-app.use('/dice', express.static('images')); 
-  
-// Server setup
-app.listen(PORT, () => {
-  console.log(`Running server on PORT ${PORT}...`);
-})
+});  
+app.listen(port); 
+app.use('/dice', express.static('public/dice'))
+app.listen(3000, function () {
+    console.log('Listening on http://localhost:3000/');
+});
 /*
 Ciao sono Emiliano di carbonara Roleplay
 seguiteci sui social!
