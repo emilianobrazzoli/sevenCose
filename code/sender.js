@@ -1,4 +1,4 @@
-const mergeImages = require('merge-image');
+const mergeImages = require('./furbo.js');
 const { Canvas, Image } = require('canvas');  
 var green = 3447003;
 var red = 15158332;
@@ -23,6 +23,7 @@ var displayMessage= function (embeds,message ){
     }];
  */
 var createEmbendedByResponse = function(response, message, language){
+    console.log(response);
     var name =  property.label(response.title+language);
     var value =  property.label(response.what+language); 
     if(response.decorator){
@@ -79,3 +80,38 @@ module.exports = {
         return send(response, message);
     }
 }; 
+var img =[
+    { src: './code/resource/dice/sx.png', x: 0, y: 0 },
+    { src: './code/resource/dice/sdice/d_00009.png', x: 30, y: 0 },
+    { src: './code/resource/dice/dx.png', x: 160, y: 0 },
+    { src: './code/resource/dice/sx.png', x: 190, y: 0 },
+    { src: './code/resource/dice/sdice/d_00009.png', x: 220, y: 0 },
+    { src: './code/resource/dice/dx.png', x: 350, y: 0 },
+    { src: './code/resource/dice/sx.png', x: 380, y: 0 },
+    { src: './code/resource/dice/sdice/d_00008.png', x: 410, y: 0 },
+    { src: './code/resource/dice/sdice/d_00000.png', x: 540, y: 0 },
+    { src: './code/resource/dice/dx.png', x: 670, y: 0 },
+    { src: './code/resource/dice/sx.png', x: 700, y: 0 },
+    { src: './code/resource/dice/sdice/d_00008.png', x: 730, y: 0 },
+    { src: './code/resource/dice/sdice/d_00001.png', x: 860, y: 0 },
+    { src: './code/resource/dice/dx.png', x: 990, y: 0 },
+    { src: './code/resource/dice/sx.png', x: 1020, y: 0 },
+    { src: './code/resource/dice/sdice/d_00007.png', x: 1050, y: 0 },
+    { src: './code/resource/dice/sdice/d_00003.png', x: 1180, y: 0 },
+    { src: './code/resource/dice/dx.png', x: 1310, y: 0 },
+    { src: './code/resource/dice/sx.png', x: 1340, y: 0 },
+    { src: './code/resource/dice/sdice/d_00006.png', x: 1370, y: 0 },
+    { src: './code/resource/dice/sdice/d_00004.png', x: 1500, y: 0 },
+    { src: './code/resource/dice/dx.png', x: 1630, y: 0 }
+  ];
+new  mergeImages(img, {
+    Canvas: Canvas,
+    Image: Image,
+    width: 1660,
+    height: 130
+  })
+.then(b64 => { 
+    var fav = b64.split(",").slice(1).join(",");
+    var imageStream = Buffer.from(fav, "base64"); 
+    console.log(imageStream);
+});
