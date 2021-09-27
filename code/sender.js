@@ -30,7 +30,7 @@ var createEmbendedByResponse = function(response, message, language){
     }
     var embed = null; 
     if(response.img){
-        mergeImages(response.img, {
+        new  mergeImages(response.img, {
             Canvas: Canvas,
             Image: Image,
             width: response.space,
