@@ -17,9 +17,11 @@
     "author": "EmilianoBrazzoli",
     "license": "MIT",
     "dependencies": {
+        "canvas": "^2.8.0",
         "discord.io": "^2.5.3",
-        "express": "^4.16.3",
         "discord.js": "12.x",
-        "dotenv": "^10.0.0"
+        "dotenv": "^10.0.0",
+        "express": "^4.16.3",
+        "merge-image": "^1.0.0"
     }
 }

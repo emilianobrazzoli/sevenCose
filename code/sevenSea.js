@@ -21,8 +21,8 @@ var bot =  new Discord.Client()
 var cmd = function(message) {
     //console.log('Comando arrivato');
     if (message.content.substring(0, 3) == '/7s' || message.content.substring(0, 3) == '/7S'  ) {
-        console.log(message.author.id+' in '+ message.channel.id+' do '+ message.content.toString());
-        gestional.commandDice(message.author.id, message.channel.id, message.content.toString().toLowerCase(), message, bot);
+        gestional.main( message  );
+
     }  
 };
 
@@ -50,8 +50,7 @@ app.get("/", (request, response) => {
     response.sendFile('home.html' , { root: './code/resource/' })
 });  
 app.listen(port); 
-
-const fetch = require("node-fetch") // To pipe received image back to caller 
+  // To pipe received image back to caller 
 // GET request to serve as proxy for images
 /*app.get("/proxy", (req, response) => { ///proxy?url=http://localhost:8080/dice/bdice/d_00003.png
   const url = req.query.url; 

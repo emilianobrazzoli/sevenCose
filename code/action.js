@@ -1,5 +1,4 @@
 /** ESEGUE I COMANDI */  
-var boldTAG ='**'; 
 
 var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus){
     if(finded.length===0){
@@ -54,7 +53,7 @@ var ricursiveFindSuccess= function(diceRolled, firstIndex, thisIndex, finded, su
     thisIndex--; 
     return ricursiveFindSuccess(diceRolled, firstIndex, thisIndex, finded, success, grado, onlyEqual,bonus) ;
 };
-var findCoupleAction= function(consume, success,bonus,language,rturn){   
+var findCoupleAction= function(consume, success,bonus,rturn){   
     if(consume.length===0){    
         return rturn;
     }else{
@@ -99,10 +98,10 @@ var findCoupleAction= function(consume, success,bonus,language,rturn){
             rturn.trashdice=rturn.trashdice+1;  
         } 
  
-        return findCoupleAction(consume, success, bonus, language,rturn);
+        return findCoupleAction(consume, success, bonus,rturn);
     } 
 };
-var findCouple = function(consume,success, bonus, language){
+var findCouple = function(consume,success, bonus){
     var rturn = { 
         raises:0,
         trashdice:0,
@@ -114,7 +113,7 @@ var findCouple = function(consume,success, bonus, language){
     if(consume.length===0){
         return rturn;
     }
-    return findCoupleAction(consume, success,  bonus, language, rturn);
+    return findCoupleAction(consume, success,  bonus, rturn);
 }
 
 var rollDice = function(diceRolled,totalDice, esplosioni ){ 
@@ -151,7 +150,7 @@ var tagResult = function(results, dices){
     return results;
 }
 module.exports = { 
-    roll: function(numberDice, soglia, bonus, vile,esplosioni, language) { 
+    roll: function(numberDice, soglia, bonus, vile,esplosioni) { 
         
         
         var totalDice = numberDice;
@@ -174,14 +173,14 @@ module.exports = {
         }  
  
         diceRolled = rollDice(diceRolled, totalDice,esplosioni); 
-        var rtrn=findCouple(diceRolled,soglia,bonus, language);  
+        var rtrn=findCouple(diceRolled,soglia,bonus);  
         
         if(vile>0){ 
             var anotherTier = rtrn.discarded; 
             vileRolled.forEach(vilDice => {
                 anotherTier.push(vilDice);
             });   
-            var rtrnVile=findCouple( anotherTier,soglia,bonus, language);   
+            var rtrnVile=findCouple( anotherTier,soglia,bonus);   
             
  
             var addictionalResult = tagResult(rtrnVile.result,vileRolled);
