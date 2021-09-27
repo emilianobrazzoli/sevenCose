@@ -5,6 +5,10 @@ var boldTAG ='**';
 var barratoTAG ='~~';
 var underlineTAG ='__';
 var logo = 'https://panels-images.twitch.tv/panel-100479319-image-c51aa119-4ff0-45c3-8cdc-b43f91620ca7';
+var sdice = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/master/dice/sdice/d_0000';
+var sbdice = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/master/dice/sbdice/d_0000';
+var vdice = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/master/dice/vdice/d_0000';
+var vbdice = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/master/dice/vbdice/d_0000';
  
 module.exports = {
     bold: function() {
@@ -12,6 +16,18 @@ module.exports = {
     },
     barra: function() {
         return barratoTAG;
+    },
+    sdice: function() {
+        return sdice;
+    },
+    sbdice: function() {
+        return sbdice;
+    },
+    vbdice: function() {
+        return vbdice;
+    },
+    vdice: function() {
+        return vdice;
     },
     label: function(label) {
         var message = '';

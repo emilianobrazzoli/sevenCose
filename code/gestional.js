@@ -110,10 +110,17 @@ var stringerDices = function(dices, tag) {
 var imageDices = function(dices, burned) {
     var message = '[';
     dices.forEach(dice => {   
+        if(burned){
+            if(dice.vile){
+                message += " "+property.vbdice()+(dice.dice-1)+".png"+" ";
+            }else{
+                message += " "+property.sbdice()+(dice.dice-1)+".png"+" ";
+            } 
+        }
         if(dice.vile){
-            message += " "+property.bold()+dice.dice+property.bold()+" ";
+            message += " "+property.vdice()+(dice.dice-1)+".png"+" ";
         }else{
-            message += " "+tag+dice.dice+tag+" ";
+            message += " "+property.sdice()+(dice.dice-1)+".png"+" ";
         } 
     });
     return message+']'
