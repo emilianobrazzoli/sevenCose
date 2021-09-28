@@ -70,7 +70,7 @@ var createEmbendedByResponses = function(response, message, language){
     embed.img = response.img;
     response.value.forEach(element => {
         embed= createEmbendedByResponse(embed,element, message, language) 
-    }); 
+    });  
     embed.width = response.width;
     embed.height = response.height;
     embed.name=name;

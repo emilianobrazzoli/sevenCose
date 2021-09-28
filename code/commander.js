@@ -105,40 +105,22 @@ var imageDices = function(dices, burned,img, width, height) {
 
 var retunResultImg= function(rtrn, response){ 
     var likewidth= response.width;
-    var over= false;
-    rtrn.result.forEach(dicesCouple => { 
-        if(likewidth+(dicesCouple.length)*130>650){
-            likewidth = 0;
-            response.height +=130;
-            over =true; 
-        }
-        var images = imageDices(dicesCouple,false,response.img,likewidth, response.height);
-        if(!over || (images[1]>  response.width)){ 
-            response.width = images[1];
-        }
-        if(images[1] >500){ 
-            likewidth = 0;
-            response.height +=130;
-            over =true;
-        }else{
-            likewidth =  images[1];
-        }  
+    rtrn.result.forEach(dicesCouple => {  
+        var images = imageDices(dicesCouple,false,response.img,likewidth, response.height); 
+        likewidth =  images[1];
         response.img = images[0];
     }); 
     rtrn.discardedResult.forEach(dicesCouple => {  
         var images=imageDices(dicesCouple,true,response.img,likewidth,response.height);
-        if(!over || (images[1]>  response.width)){ 
-            response.width = images[1];
-        }
-        if(images[1] >500){ 
-            likewidth = 0;
-            response.height +=130;
-            over =true;
-        }else{
-            likewidth =  images[1];
-        }  
-        response.img = images[0]; 
+        likewidth =  images[1];
+        response.img = images[0];
     });   
+    response.width=likewidth;
+    
+    if(response.width>response.height+130){
+        response.height+=response.width-130  
+        response.img.push({ src:  property.dx()+".png", x: 0, y: response.height });
+    }
     return response;
 }  
  
