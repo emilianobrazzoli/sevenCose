@@ -183,10 +183,13 @@ var actionCalling = function(response, args){
     var numberDice= args[1];    
     var esplosioni=args.includes('e');  
  
-    if(numberDice<='0' || isNaN(numberDice) || numberDice>50){ 
+    if(numberDice<='0' || isNaN(numberDice) || numberDice>50)
         response= (addResponse('Funny','funny')); 
-
-    }else{ 
+    else if(bonus<='0' || isNaN(bonus) || bonus>10)
+        response= (addResponse('Funny','funny')); 
+    else if(soglia<='0' || isNaN(soglia) || soglia>20)
+        response= (addResponse('Funny','funny')); 
+    else{ 
         result =  action.roll( numberDice, parseInt(soglia),parseInt(bonus),parseInt(vile), esplosioni); 
         response = resultResponse(result); 
     }  
