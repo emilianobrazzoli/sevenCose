@@ -125,7 +125,7 @@ var addResponse = function (name, descr) {
     response.img=[];
     response.name=name;
     response.value=[];
-    response.color= green;
+    response.color= yellow;
     response= addMoreResponse(descr,'', response);  
     return response;
 }
