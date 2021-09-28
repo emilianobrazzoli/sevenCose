@@ -5,6 +5,7 @@ var boldTAG ='**';
 var barratoTAG ='~~';
 var underlineTAG ='__';
 var logo = 'https://panels-images.twitch.tv/panel-100479319-image-00fcadfd-c445-491b-a2c7-8a1e1127c634';
+var logo2 = 'https://panels-images.twitch.tv/panel-100479319-image-c51aa119-4ff0-45c3-8cdc-b43f91620ca7';
 /*
  
 var sdice = './code/resource/dice/sdice/d_0000';
@@ -20,6 +21,12 @@ var vbdice = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/maste
 var dx = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/master/code/resource/dice/dx';
 var sx = 'https://raw.githubusercontent.com/emilianobrazzoli/sevenCose/master/code/resource/dice/sx';
 module.exports = {
+    logo : function() {
+        return logo;
+    },
+    logo2 : function() {
+        return logo2;
+    },
     sx: function() {
         return sx;
     },
@@ -112,10 +119,10 @@ module.exports = {
                 message =  'Molto divertente';
                 break;
             case 'resultita':
-                message =  'Risultati: ';
+                message =  'Risultati ';
                 break;
             case 'resulteng':
-                message =  'Result: ';
+                message =  'Result ';
                 break;
             case 'vileindiceita':
                 message =  'Dadi Spregevoli ';
@@ -146,9 +153,6 @@ module.exports = {
                 break; 
             case 'corrupteng':
                 message =  'Corruption point ';
-                break; 
-            case 'logo':
-                message = logo;
                 break; 
             default:
                 message = label;

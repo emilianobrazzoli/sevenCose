@@ -62,13 +62,20 @@ var split = function( element, argsSplitted){
 }
 var stringerDices = function(dices, tag) {
     var message = '[';
+    var bonuses = 0;
     dices.forEach(dice => {   
         if(dice.vile){
             message += " "+property.bold()+tag+dice.dice+tag+property.bold()+" ";
         }else{
             message += " "+tag+dice.dice+tag+" ";
         } 
+        if(dice.bonus){ 
+            bonuses +=dice.bonus;
+        }
     });
+    if(bonuses>0){
+        message += tag+"+"+bonuses+""+tag;
+    }
     return message+']'
 }
 
@@ -150,36 +157,26 @@ var resultResponse = function (result) {
     response = addMoreResponse('void',message,response);
     return response;
 }
+var getArgValue = function (args, tag, def) {
+    var soglia = null;
+    if(args.includes(tag)){
+        var index= args.indexOf(tag);
+        soglia=args[index+1];
+        if(!soglia){
+            soglia=def;
+        } 
+    }
+    return soglia;
+}
+
 var actionCalling = function(response, args){
     
-    var bonus =  0;
-    var soglia= 10;
-    var vile= 0; 
-    var numberDice= args[1]; 
-    if(args.includes('s')){
-        var index= args.indexOf('s');
-        soglia=args[index+1];
-        if(!soglia){
-            soglia=10;
-        }
-    }else if(args.includes('t')){
-        var index= args.indexOf('t');
-        soglia=args[index+1];
-        if(!soglia){
-            soglia=10;
-        }
-    }
-    if(args.includes('b')){
-        var index= args.indexOf('b');
-        bonus=args[index+1], 0;
-    } 
-    if(args.includes('v')){
-        var index= args.indexOf('v');
-        vile=args[index+1], 0;
-    }
+    var bonus = getArgValue(args,'b',0) || 0;
+    var soglia= getArgValue(args,'s', 10) || getArgValue(args,'t', 10) || 10;
+    var vile= getArgValue(args,'v',0); 
+    var numberDice= args[1];    
     var esplosioni=args.includes('e');  
-
-    
+ 
     if(numberDice<='0' || isNaN(numberDice) || numberDice>50){ 
         response= (addResponse('Funny','funny')); 
 

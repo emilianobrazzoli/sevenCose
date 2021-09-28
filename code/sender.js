@@ -1,9 +1,5 @@
 const mergeImages = require('./furbo.js');
 const { Canvas, Image } = require('canvas');  
-var green = 3447003;
-var red = 15158332;
-var white = 16777215;
-var yellow = 16705372;
 var property = require('./property.js');
 var Discord = require("discord.js");
 var manager = require('./manager.js'); 
@@ -30,18 +26,18 @@ var displayMessage= function (embeds,message ){
                 .setAuthor(tMember.displayName,avtar)
                 .setDescription(element.value)
                 .setTimestamp()
-                .setFooter('Created by CarbonaraRoleplay - Sended',property.label('logo'))
+                .setFooter('Created by CarbonaraRoleplay - Sended',property.logo2(),'https://linktr.ee/CarbonaraRoleplay')
                 .attachFiles([attachment])  ;
                 message.channel.send(embed);
             });
         } else{
             var embed=new Discord.MessageEmbed()
             .setTitle(element.name)
-            .setThumbnail(property.label('logo'))
+            .setThumbnail(property.logo())
             .setAuthor(tMember.displayName,avtar)
             .setColor(element.color)
             .setTimestamp()
-            .setFooter('Created by CarbonaraRoleplay - Sended',property.label('logo'))
+            .setFooter('Created by CarbonaraRoleplay - Sended', property.logo2(), 'https://linktr.ee/CarbonaraRoleplay' )
             .setDescription(element.value) ;  
             message.channel.send(embed);
         }
