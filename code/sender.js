@@ -13,7 +13,7 @@ var displayMessage= function (embeds,message ){
                 Canvas: Canvas,
                 Image: Image, 
                 width: element.width,
-                height: element.height+130
+                height: 130
               })
             .then(b64 => { 
                 var fav = b64.split(",").slice(1).join(",");
