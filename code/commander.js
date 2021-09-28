@@ -185,7 +185,7 @@ var actionCalling = function(response, args){
  
     if(numberDice<='0' || isNaN(numberDice) || numberDice>50)
         response= (addResponse('Funny','funny')); 
-    else if(bonus<='0' || isNaN(bonus) || bonus>10)
+    else if(bonus<'0' || isNaN(bonus) || bonus>10)
         response= (addResponse('Funny','funny')); 
     else if(soglia<='0' || isNaN(soglia) || soglia>20)
         response= (addResponse('Funny','funny')); 
