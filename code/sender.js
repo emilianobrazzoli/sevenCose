@@ -53,7 +53,7 @@ var displayMessage= function (embeds,message ){
  */
 var createEmbendedByResponse = function(embed,response, message, language){ 
     var value =  property.label(response.what+language); 
-    if(response.decorator){
+    if(response.decorator || response.decorator===0){
         embed.value =embed.value+"\n"+value+" "+response.decorator;
     } else{
         embed.value =embed.value+"\n"+value;
