@@ -10,7 +10,31 @@ var manager = require('./manager.js');
 
 var displayMessage= function (embeds,message ){ 
     embeds.forEach(element => { 
-        message.channel.send(element);
+        if(element.img){
+            new  mergeImages(element.img, {
+                Canvas: Canvas,
+                Image: Image,
+                width: element.space,
+                height: 130
+              })
+            .then(b64 => { 
+                var fav = b64.split(",").slice(1).join(",");
+                var imageStream = Buffer.from(fav, "base64");
+                var attachment = new Discord.MessageAttachment(imageStream, "dices.png");
+                var embed = new Discord.MessageEmbed()
+                .setImage('attachment://dices.png')
+                .setTitle(element.name)
+                .setColor(element.color)
+                .setDescription(element.value)
+                .attachFiles([attachment])  
+                message.channel.send(embed);
+            });
+        } else{
+            var embed=new Discord.MessageEmbed()
+            .setTitle(element.name)
+            .setColor(element.color)
+            .setDescription(element.value) ;  
+        }
     });
 };
  
@@ -21,48 +45,30 @@ var displayMessage= function (embeds,message ){
         decorator
     }];
  */
-var createEmbendedByResponse = function(response, message, language){ 
-    var name =  property.label(response.title+language);
+var createEmbendedByResponse = function(embed,response, message, language){ 
     var value =  property.label(response.what+language); 
     if(response.decorator){
-        value = value+" "+response.decorator;
-    }
-    var embed = null; 
-    if(response.img){
-        new  mergeImages(response.img, {
-            Canvas: Canvas,
-            Image: Image,
-            width: response.space,
-            height: 130
-          })
-        .then(b64 => { 
-            var fav = b64.split(",").slice(1).join(",");
-            var imageStream = Buffer.from(fav, "base64");
-            var attachment = new Discord.MessageAttachment(imageStream, "favicon.png");
-            embed = new Discord.MessageEmbed()
-            .setTitle(name)
-            .setColor(green)
-            .setDescription(value)
-            .attachFiles([attachment])  
-            message.channel.send(embed);
-        });
+        embed.value =embed.value+"\n"+value+" "+response.decorator;
     } else{
-        embed=new Discord.MessageEmbed()
-        .setTitle(name)
-        .setColor(green)
-        .setDescription(value) ;  
+        embed.value =embed.value+"\n"+value;
     }
     return embed;
 }
                          
 var createEmbendedByResponses = function(response, message, language){
+    var name =  property.label(response.name+language);
     var embeds = [];
-    response.forEach(element => {
-        var embed= createEmbendedByResponse(element, message, language)
-        if(embed){
-            embeds.push(embed);
-        }
+    var embed= {};
+    embed.value = '';
+    embed.color =response.color
+    embed.img = response.img;
+    response.value.forEach(element => {
+        embed= createEmbendedByResponse(embed,element, message, language) 
     });
+    console.log(embed);
+    embed.space = response.space;
+    embed.name=name;
+    embeds.push(embed);
     return embeds;
 }
 var send = function(response, message){

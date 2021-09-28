@@ -2,6 +2,10 @@ var commands = ['aiuto','help','ita','eng','t','c','7s','/7s','s','b','e','v'];
 var action = require('./action.js');
 var manager = require('./manager.js'); 
 var property = require('./property.js'); 
+var green = 3447003;
+var red = 15158332;
+var white = 16777215;
+var yellow = 16705372;
 
 var splitArgument = function(args){
     var argsSplitted = [];
@@ -56,6 +60,19 @@ var split = function( element, argsSplitted){
     }
     return argsSplitted;
 }
+var stringerDices = function(dices, tag) {
+    var message = '[';
+    dices.forEach(dice => {   
+        if(dice.vile){
+            message += " "+property.bold()+tag+dice.dice+tag+property.bold()+" ";
+        }else{
+            message += " "+tag+dice.dice+tag+" ";
+        } 
+    });
+    return message+']'
+}
+
+
 var imageDices = function(dices, burned,img, space) { 
     img.push({ src:  property.sx()+".png", x: space,y: 0 }); 
         space=space+30; 
@@ -81,32 +98,58 @@ var imageDices = function(dices, burned,img, space) {
 }
  
 
-var retunResultImg= function(rtrn, space){
-    var img = [];  
+var retunResultImg= function(rtrn, response){ 
     rtrn.result.forEach(dicesCouple => { 
-        var immmm= imageDices(dicesCouple,false,img,space);
-        space = immmm[1];
-        img = immmm[0];
+        images = imageDices(dicesCouple,false,response.img,response.space);
+        response.space = images[1];
+        response.img = images[0];
     }); 
     rtrn.discardedResult.forEach(dicesCouple => { 
-        var immmm=imageDices(dicesCouple, true,img,space); 
-        space = immmm[1];
-        img = immmm[0];
-    }); 
-    
-    return [img,space];
+        var images=imageDices(dicesCouple, true,response.img,response.space); 
+        response.space = images[1];
+        response.img = images[0];
+    });  
+    return response;
 }  
-
-var addResponse = function(title, descr, img,decorator, space){ 
-    return {
-        title: title, 
+ 
+var addMoreResponse = function(descr,decorator,response){ 
+    response.value.push({
         what: descr,
-        img: img,
-        decorator: decorator,
-        space: space
-    };  
+        decorator: decorator
+    });  
+    return response;
 };
-
+var addResponse = function (name, descr) {
+    var response={};
+    response.space = 0;
+    response.img=[];
+    response.name=name;
+    response.value=[];
+    response.color= green;
+    response= addMoreResponse(descr,'', response);  
+    return response;
+}
+var resultResponse = function (result) {
+    var response={};
+    response.space = 0;
+    response.img=[];
+    response.name='result';
+    response.value=[];
+    response.color= green; 
+    response= retunResultImg(result,response);
+    response = addMoreResponse('raises',result.raises,response) ;
+    response = addMoreResponse('trashdice',result.trashdice,response);
+    var message = '';
+    result.result.forEach(dicesCouple => { 
+        message +=stringerDices(dicesCouple,'');
+    }); 
+    message += '   ';
+    result.discardedResult.forEach(dicesCouple => { 
+        message +=stringerDices(dicesCouple, ''); 
+    }); 
+    response = addMoreResponse('void',message,response);
+    return response;
+}
 var actionCalling = function(response, args){
     
     var bonus =  0;
@@ -138,21 +181,18 @@ var actionCalling = function(response, args){
 
     
     if(numberDice<='0' || isNaN(numberDice) || numberDice>50){ 
-        response.push(addResponse('Funny','funny')); 
+        response= (addResponse('Funny','funny')); 
 
     }else{ 
         result =  action.roll( numberDice, parseInt(soglia),parseInt(bonus),parseInt(vile), esplosioni); 
-        space = 0;
-        immmmm= retunResultImg(result,space);
-        response.push(addResponse('result','raises', immmmm[0],result.raises,immmmm[1] )); 
-        //response.push(addResponse('trashdice','trashdice',null,result.trashdice));  
+        response = resultResponse(result); 
     }  
     return response;
 }
 var commandDice = function(args, channelId){
     
     var channel = manager.searchChannel(channelId);
-    var response =[]; 
+    var response ={}; 
     args =splitArgument(args);
     console.log(channel.len+' commands: '+args);
 
@@ -160,31 +200,31 @@ var commandDice = function(args, channelId){
         var cmd = args[1]; 
         switch (cmd) { 
             case 'c':
-                response.push(addResponse( 'Carbonara', 'carbonara')); 
+                response =(addResponse( 'Carbonara', 'carbonara')); 
                 break;
             case 'help':  
-                response.push(addResponse( 'Help', 'help'));
+                response=(addResponse( 'Help', 'help'));
                 break;
             case 'eng': 
                 channel.len ='eng';
                 manager.saveChannel(channel);
-                response.push(addResponse( 'English', 'yessir')); 
+                response=(addResponse( 'English', 'yessir')); 
                 break;
             case 'ita': 
                 channel.len ='ita';
                 manager.saveChannel(channel);
-                response.push(addResponse( 'Italiano','yessir'));  
+                response=(addResponse( 'Italiano','yessir'));  
                 break;
             default:
                 if(isNaN(cmd)){
-                    response.push(addResponse( 'Need help?', 'try'));   
+                    response=(addResponse( 'Need help?', 'try'));   
                 }else{
                     response = actionCalling(response, args);
                 }
                 break;
         }
     } else {
-        response.push(addResponse('Need help?', 'try'));    
+        response=(addResponse('Need help?', 'try'));    
     }  
     return response;
 }
