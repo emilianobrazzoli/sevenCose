@@ -112,6 +112,12 @@ module.exports = {
             case 'yessireng':
                 message =  'Yes sir!';
                 break;
+            case 'Funnyeng':
+                message =  'AHAHAHAHAHAHAHA!';
+                break;
+            case 'Funnyita':
+                message =  'AHAHAHAHAHAHAHA!';
+                break;
             case 'funnyeng':
                 message =  'Very funny';
                 break;
