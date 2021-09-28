@@ -145,7 +145,7 @@ var resultResponse = function (result) {
     }); 
     message += '   ';
     result.discardedResult.forEach(dicesCouple => { 
-        message +=stringerDices(dicesCouple, ''); 
+        message +=stringerDices(dicesCouple, property.barra()); 
     }); 
     response = addMoreResponse('void',message,response);
     return response;
