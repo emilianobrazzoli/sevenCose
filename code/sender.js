@@ -8,12 +8,12 @@ var displayMessage= function (embeds,message ){
     let tMember = message.guild.members.cache.get(message.author.id); 
     var avtar = "https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".jpeg";
     embeds.forEach(element => { 
-        if(element.img && element.img.length>0){
+        if(element.img && element.img.length>0){ 
             new  mergeImages(element.img, {
                 Canvas: Canvas,
                 Image: Image, 
-                width: element.space,
-                height: 130
+                width: element.width,
+                height: element.height+130
               })
             .then(b64 => { 
                 var fav = b64.split(",").slice(1).join(",");
@@ -71,7 +71,8 @@ var createEmbendedByResponses = function(response, message, language){
     response.value.forEach(element => {
         embed= createEmbendedByResponse(embed,element, message, language) 
     }); 
-    embed.space = response.space;
+    embed.width = response.width;
+    embed.height = response.height;
     embed.name=name;
     embeds.push(embed);
     return embeds;

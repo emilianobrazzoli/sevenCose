@@ -80,42 +80,65 @@ var stringerDices = function(dices, tag) {
 }
 
 
-var imageDices = function(dices, burned,img, space) { 
-    img.push({ src:  property.sx()+".png", x: space,y: 0 }); 
-        space=space+30; 
+var imageDices = function(dices, burned,img, width, height) {    
     dices.forEach(dice => { 
         if(burned){
             if(dice.vile){
-                img.push({ src: property.vbdice()+(dice.dice-1)+".png", x: space, y: 0 });
+                img.push({ src: property.vbdice()+(dice.dice-1)+".png", x: width, y: height });
             }else{
-                img.push({ src:  property.sbdice()+(dice.dice-1)+".png", x: space, y: 0 });
+                img.push({ src:  property.sbdice()+(dice.dice-1)+".png", x: width, y: height});
             } 
         }else{
             if(dice.vile){
-                img.push({ src:  property.vdice()+(dice.dice-1)+".png", x:space, y: 0 });
+                img.push({ src:  property.vdice()+(dice.dice-1)+".png", x:width, y: height });
             }else{
-                img.push({ src:  property.sdice()+(dice.dice-1)+".png", x: space, y: 0 });
+                img.push({ src:  property.sdice()+(dice.dice-1)+".png", x: width, y: height});
             } 
         }
-        space=space+130;
+        width+=130;
     });
-    img.push({ src:  property.dx()+".png", x: space, y: 0 });
-    space=space+30;
-    return [img,space];
+    img.push({ src:  property.dx()+".png", x: width, y: height });
+    width+=30;
+    return [img,width, height];
 }
  
 
 var retunResultImg= function(rtrn, response){ 
+    var likewidth= response.width;
+    var over= false;
     rtrn.result.forEach(dicesCouple => { 
-        images = imageDices(dicesCouple,false,response.img,response.space);
-        response.space = images[1];
+        if(likewidth+(dicesCouple.length)*130>650){
+            likewidth = 0;
+            response.height +=130;
+            over =true; 
+        }
+        var images = imageDices(dicesCouple,false,response.img,likewidth, response.height);
+        if(!over || (images[1]>  response.width)){ 
+            response.width = images[1];
+        }
+        if(images[1] >500){ 
+            likewidth = 0;
+            response.height +=130;
+            over =true;
+        }else{
+            likewidth =  images[1];
+        }  
         response.img = images[0];
     }); 
-    rtrn.discardedResult.forEach(dicesCouple => { 
-        var images=imageDices(dicesCouple, true,response.img,response.space); 
-        response.space = images[1];
-        response.img = images[0];
-    });  
+    rtrn.discardedResult.forEach(dicesCouple => {  
+        var images=imageDices(dicesCouple,true,response.img,likewidth,response.height);
+        if(!over || (images[1]>  response.width)){ 
+            response.width = images[1];
+        }
+        if(images[1] >500){ 
+            likewidth = 0;
+            response.height +=130;
+            over =true;
+        }else{
+            likewidth =  images[1];
+        }  
+        response.img = images[0]; 
+    });   
     return response;
 }  
  
@@ -128,7 +151,7 @@ var addMoreResponse = function(descr,decorator,response){
 };
 var addResponse = function (name, descr) {
     var response={};
-    response.space = 0;
+    response.width = 0;
     response.img=[];
     response.name=name;
     response.value=[];
@@ -138,7 +161,8 @@ var addResponse = function (name, descr) {
 }
 var resultResponse = function (result) {
     var response={};
-    response.space = 0;
+    response.width = 0;
+    response.height = 0;
     response.img=[];
     response.name='result';
     response.value=[];
