@@ -4,7 +4,7 @@ var italicTAG ='*';
 var boldTAG ='**';
 var barratoTAG ='~~';
 var underlineTAG ='__';
-var logo = 'https://panels-images.twitch.tv/panel-100479319-image-c51aa119-4ff0-45c3-8cdc-b43f91620ca7';
+var logo = 'https://panels-images.twitch.tv/panel-100479319-image-00fcadfd-c445-491b-a2c7-8a1e1127c634';
 /*
  
 var sdice = './code/resource/dice/sdice/d_0000';

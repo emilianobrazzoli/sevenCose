@@ -9,11 +9,13 @@ var Discord = require("discord.js");
 var manager = require('./manager.js'); 
 
 var displayMessage= function (embeds,message ){ 
+    let tMember = message.guild.members.cache.get(message.author.id); 
+    var avtar = "https://cdn.discordapp.com/avatars/"+message.author.id+"/"+message.author.avatar+".jpeg";
     embeds.forEach(element => { 
-        if(element.img){
+        if(element.img && element.img.length>0){
             new  mergeImages(element.img, {
                 Canvas: Canvas,
-                Image: Image,
+                Image: Image, 
                 width: element.space,
                 height: 130
               })
@@ -22,18 +24,26 @@ var displayMessage= function (embeds,message ){
                 var imageStream = Buffer.from(fav, "base64");
                 var attachment = new Discord.MessageAttachment(imageStream, "dices.png");
                 var embed = new Discord.MessageEmbed()
-                .setImage('attachment://dices.png')
+                .setImage('attachment://dices.png') 
                 .setTitle(element.name)
                 .setColor(element.color)
+                .setAuthor(tMember.displayName,avtar)
                 .setDescription(element.value)
-                .attachFiles([attachment])  
+                .setTimestamp()
+                .setFooter('Created by CarbonaraRoleplay - Sended',property.label('logo'))
+                .attachFiles([attachment])  ;
                 message.channel.send(embed);
             });
         } else{
             var embed=new Discord.MessageEmbed()
             .setTitle(element.name)
+            .setThumbnail(property.label('logo'))
+            .setAuthor(tMember.displayName,avtar)
             .setColor(element.color)
+            .setTimestamp()
+            .setFooter('Created by CarbonaraRoleplay - Sended',property.label('logo'))
             .setDescription(element.value) ;  
+            message.channel.send(embed);
         }
     });
 };
