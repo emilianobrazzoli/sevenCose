@@ -8,7 +8,7 @@ Puoi aggiungere diversi comandi al tiro come:
 :heavy_plus_sign: Aggiungendo **b N** sommerai una cifra N ad ogni dado tirato 
 :warning: Aggiungendo **s N** modificherai la soglia incremento in N (di default è a 10) 
 
-:flag_gb: *Type /7s eng to change to eng lenguage*
+:flag_gb: *Type /7s eng to change to eng language*
 
 :pirate_flag: :pirate_flag: :pirate_flag: 
 :spaghetti: Per maggiori dettagli sul creatore **/7s carbonara**
